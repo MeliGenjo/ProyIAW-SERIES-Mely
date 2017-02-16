@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemBuscar"
+        android:title="Buscar"
+        />
+
+    <item
+        android:id="@+id/item"
+        android:title="Otro Item"
+        />
+
+    <item
+        android:id="@+id/itemLogout"
+        android:title="Logout"
+        />
+
+
+</menu>

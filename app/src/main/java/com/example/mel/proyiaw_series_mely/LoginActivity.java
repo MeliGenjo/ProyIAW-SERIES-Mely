@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
 
-        loginButton.setReadPermissions(Array.asList("email"));
+        //loginButton.setReadPermissions(Array.asList("email"));
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
