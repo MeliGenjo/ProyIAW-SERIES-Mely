@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ProyIAW-SERIES-Mely</string>
+
+    <string name="facebook_app_id">557918394379082</string>
+    <string name="login_cancel">Se canceló el inicio de sesión</string>
+    <string name="login_error">Se produjo un error al iniciar sesión</string>
+</resources>
