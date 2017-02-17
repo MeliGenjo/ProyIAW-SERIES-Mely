@@ -7,9 +7,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+
 import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
@@ -17,14 +20,17 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         if (AccessToken.getCurrentAccessToken()== null) {
             irPantallaLogin();
         }
+
     }
 
     @Override
@@ -42,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 irPantallaBuscar();
                 return true;
 
-            case R.id.item:
-                Toast.makeText(MainActivity.this, "Ir activity X", Toast.LENGTH_SHORT).show();
+            case R.id.itemCompartir:
+                Toast.makeText(MainActivity.this, "Compartir contenido", Toast.LENGTH_SHORT).show();
+                irPantallaCompartir();
                 return true;
 
             case R.id.itemLogout:
@@ -54,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void irPantallaCompartir() {
+        Intent intent = new Intent(this, ShareActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void irPantallaBuscar() {
@@ -71,5 +84,9 @@ public class MainActivity extends AppCompatActivity {
     private void logout(){
         LoginManager.getInstance().logOut();
         irPantallaLogin();
+    }
+
+    private void shareFacebook(View v) {
+
     }
 }
