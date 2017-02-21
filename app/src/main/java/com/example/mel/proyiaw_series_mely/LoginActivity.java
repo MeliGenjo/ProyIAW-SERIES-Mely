@@ -3,6 +3,8 @@ package com.example.mel.proyiaw_series_mely;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Picture;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginButton loginButton;
     private AdminSQLiteOpenHelper BD;
+    private Uri img;
+    private String nameUser;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -55,9 +59,10 @@ public class LoginActivity extends AppCompatActivity {
                 BD = new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
 
                 if (profile!=null) { //si el profile no es nulo obtengo los datos de facebook para almacenar en la BD
-                    String nombreBD = profile.getName();
+                    nameUser = profile.getName();
                     String idFaceBD = profile.getId();
-                    String msj = BD.altaUsuario(idFaceBD,nombreBD); //cargo el usuario segun corresponda
+                    img = profile.getProfilePictureUri(150,150); //obtengo la foto de perfil de FB
+                    String msj = BD.altaUsuario(idFaceBD,nameUser); //cargo el usuario segun corresponda
                     Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
                     irPantallaPrincipal();
                 }
@@ -78,6 +83,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void irPantallaPrincipal(){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("Foto",img.toString()); //envio la foto de perfil a mainActivity
+        intent.putExtra("NombreUsuario",nameUser);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 

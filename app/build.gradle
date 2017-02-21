@@ -33,5 +33,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.facebook.android:facebook-android-sdk:4.+' //FACEBOOK
+    compile group:'com.squareup.picasso', name:'picasso', version:'2.5.0' //para ver las imagenes
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }
