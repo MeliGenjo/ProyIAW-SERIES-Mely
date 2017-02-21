@@ -12,6 +12,11 @@
         />
 
     <item
+        android:id="@+id/itemUsuarios"
+        android:title="Usuarios"
+        />
+
+    <item
         android:id="@+id/itemLogout"
         android:title="Logout"
         />

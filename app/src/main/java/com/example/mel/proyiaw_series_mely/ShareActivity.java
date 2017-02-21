@@ -18,9 +18,12 @@ import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class ShareActivity extends AppCompatActivity {
 
-    private Button shareFace, shareWhatsapp, share, btnFacebook;
+    private Button shareFace, shareWhatsapp, share, btnFacebook, home;
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
 
@@ -35,6 +38,14 @@ public class ShareActivity extends AppCompatActivity {
         shareDialog = new ShareDialog(this);
         // this part is optional
         //shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() { ... });
+
+        home = (Button) findViewById(R.id.btnHome);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irPantallaPrincipal();
+            }
+        });
 
         btnFacebook = (Button) findViewById(R.id.btnShareFace);
         btnFacebook.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +107,13 @@ public class ShareActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void irPantallaPrincipal(){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 
     private void shareContenido(View view) {

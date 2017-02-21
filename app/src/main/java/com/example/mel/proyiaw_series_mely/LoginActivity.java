@@ -1,14 +1,20 @@
 package com.example.mel.proyiaw_series_mely;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import android.content.Intent;
 import android.widget.Toast;
 
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -22,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private LoginButton loginButton;
+    private AdminSQLiteOpenHelper BD;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -40,9 +47,20 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                irPantallaPrincipal();
 
+            // si el inicio de sesion es correcto
+            public void onSuccess(LoginResult loginResult) {
+                AccessToken accessToken = loginResult.getAccessToken();
+                Profile profile = Profile.getCurrentProfile();
+                BD = new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
+
+                if (profile!=null) { //si el profile no es nulo obtengo los datos de facebook para almacenar en la BD
+                    String nombreBD = profile.getName();
+                    String idFaceBD = profile.getId();
+                    String msj = BD.altaUsuario(idFaceBD,nombreBD); //cargo el usuario segun corresponda
+                    Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
+                    irPantallaPrincipal();
+                }
             }
 
             @Override
@@ -55,8 +73,6 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(getApplicationContext(), R.string.login_error, Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
     }
 

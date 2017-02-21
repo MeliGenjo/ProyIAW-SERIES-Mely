@@ -21,6 +21,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class MainActivity extends AppCompatActivity {
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 irPantallaCompartir();
                 return true;
 
+            case R.id.itemUsuarios:
+                irPantallaUsuarios();
+                return true;
+
             case R.id.itemLogout:
                 Toast.makeText(MainActivity.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
                 logout();
@@ -61,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void irPantallaUsuarios() {
+        Intent intent = new Intent(this, UsuariosActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void irPantallaCompartir() {

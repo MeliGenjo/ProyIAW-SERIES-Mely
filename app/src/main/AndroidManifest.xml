@@ -49,6 +49,7 @@
 
         <activity android:name=".buscarActivity" />
         <activity android:name=".ShareActivity"></activity>
+        <activity android:name=".UsuariosActivity" />
     </application>
 
 </manifest>
