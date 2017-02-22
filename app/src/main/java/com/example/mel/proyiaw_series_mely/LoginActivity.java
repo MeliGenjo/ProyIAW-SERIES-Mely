@@ -33,10 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     private AdminSQLiteOpenHelper BD;
     private Uri img;
     private String nameUser;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
 
 
     @Override
@@ -46,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
-
-        //loginButton.setReadPermissions(Array.asList("email"));
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -83,8 +77,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void irPantallaPrincipal(){
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("Foto",img.toString()); //envio la foto de perfil a mainActivity
-        intent.putExtra("NombreUsuario",nameUser);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
@@ -24,36 +25,51 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView fotoPerfil;
-    private TextView txt;
+    private  ImageView fotoPerfil;
+    private  TextView txt;
+    private Button btnBuscar;
+    private String nameUser;
+    private Uri img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
-        fotoPerfil = (ImageView) findViewById(R.id.imageView);
-        txt = (TextView) findViewById(R.id.textHola);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        setearDatosUsuarios();
 
-        //traigo los extras(datos) mediante intent y los seteo a esta actividad
-        Intent i = getIntent();
-        Bundle extra = i.getExtras();
-        if (extra!= null) {
-            String foto = extra.getString("Foto");
-            Picasso.with(getApplicationContext()).load(foto).into(fotoPerfil);
-            String nombre = extra.getString("NombreUsuario");
-            txt.setText("Hola "+nombre+"!");
-        }
-
+        btnBuscar = (Button) findViewById(R.id.btnBuscar);
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irPantallaBuscar();
+            }
+        });
 
 
         if (AccessToken.getCurrentAccessToken()== null) {
             irPantallaLogin();
         }
 
-
     }
+
+    // permite setear la foto y el nombre del usuario
+    private void setearDatosUsuarios() {
+
+        fotoPerfil = (ImageView) findViewById(R.id.imageView);
+        txt = (TextView) findViewById(R.id.textHola);
+
+        Profile profile = Profile.getCurrentProfile();
+        if (profile!=null) {
+            nameUser = profile.getName();
+            img = profile.getProfilePictureUri(150, 150);
+            String foto = img.toString();
+            Picasso.with(getApplicationContext()).load(foto).into(fotoPerfil); //seteo la foto al imageView
+            txt.setText("Hola " + nameUser + "!");
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,9 +96,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.itemLogout:
-                Toast.makeText(MainActivity.this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, "Te esperamos pronto!!", Toast.LENGTH_SHORT).show();
                 logout();
                 return true;
+
+            case R.id.itemCerrarApp:
+               // Toast.makeText(MainActivity.this, "Hasta luego!", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -118,7 +140,5 @@ public class MainActivity extends AppCompatActivity {
         irPantallaLogin();
     }
 
-    private void shareFacebook(View v) {
 
-    }
 }

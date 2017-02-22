@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProyIAW-SERIES-Mely</string>
+    <string name="app_name">SeriesApp</string>
 
     <string name="facebook_app_id">557918394379082</string>
     <string name="login_cancel">Se canceló el inicio de sesión</string>
