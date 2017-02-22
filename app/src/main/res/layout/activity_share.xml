@@ -23,47 +23,10 @@
         android:text="Compartir General"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="21dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="23dp" />
-
-
-
-    <Button
-        android:onClick="shareFacebook"
-        android:id="@+id/btnFacebook"
-        android:background="@drawable/facebook"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_below="@+id/btnShareFace"
+        android:layout_below="@+id/btnHome"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="38dp" />
+        android:layout_marginTop="14dp" />
 
-    <Button
-        android:onClick="shareWhatsapp"
-        android:id="@+id/btnWhatsapp"
-        android:background="@drawable/whatsapp"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/btnFacebook"
-        android:layout_alignLeft="@+id/btnFacebook"
-        android:layout_alignStart="@+id/btnFacebook"
-        android:layout_marginTop="29dp" />
-
-    <Button
-        android:id="@+id/btnShareFace"
-        android:text="Compartir en Facebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:layout_below="@+id/btnHome"
-        android:layout_alignLeft="@+id/btnFacebook"
-        android:layout_alignStart="@+id/btnFacebook" />
 
 </RelativeLayout>

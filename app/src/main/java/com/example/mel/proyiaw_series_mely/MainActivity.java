@@ -96,12 +96,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.itemLogout:
-               // Toast.makeText(MainActivity.this, "Te esperamos pronto!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Te esperamos pronto!!", Toast.LENGTH_SHORT).show();
                 logout();
                 return true;
 
             case R.id.itemCerrarApp:
-               // Toast.makeText(MainActivity.this, "Hasta luego!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Hasta luego!", Toast.LENGTH_SHORT).show();
                 finish();
                 return true;
 

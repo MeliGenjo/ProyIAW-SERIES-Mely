@@ -23,7 +23,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class ShareActivity extends AppCompatActivity {
 
-    private Button shareFace, shareWhatsapp, share, btnFacebook, home;
+    private Button share, home;
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
 
@@ -47,66 +47,22 @@ public class ShareActivity extends AppCompatActivity {
             }
         });
 
-        btnFacebook = (Button) findViewById(R.id.btnShareFace);
-        btnFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bitmap imagen = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_launcher);
-                SharePhoto photo = new SharePhoto.Builder()
-                        .setBitmap(imagen)
-                        .build();
 
-                ShareLinkContent content = new ShareLinkContent.Builder()
-                        .setContentUrl(Uri.parse("https://www.elandroidelibre.com/wp-content/uploads/2014/12/desarrollador-android-680x394.jpg"))
-                        .setQuote("Connect on a global scale.")
-                        .build();
-
-               /* SharePhotoContent content = new SharePhotoContent.Builder()
-                        .addPhoto(photo)
-                        .build();*/
-
-                ShareDialog.show(ShareActivity.this, content);
-            }
-        });
+        // opción compartir con cualquier red social
 
 
-        /// botones extras
-        shareWhatsapp= (Button) findViewById(R.id.btnWhatsapp);
-        shareFace= (Button) findViewById(R.id.btnFacebook);
         share = (Button) findViewById(R.id.btnShare);
-
-
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String sitio = "http://www.tvmaze.com/shows/4144/imposters"; //CAMBIAR ESTO segun el sitio que quiera compartir
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "El mejor blog de android http://javaheros.blogspot.pe/");
+                intent.putExtra(Intent.EXTRA_TEXT, sitio);
                 startActivity(Intent.createChooser(intent, "Share with"));
             }
         });
 
-        shareWhatsapp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "El mejor blog de android http://javaheros.blogspot.pe/");
-                intent.setPackage("com.whatsapp");
-                startActivity(intent);
-            }
-        });
-
-        shareFace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "El mejor blog de android http://javaheros.blogspot.pe/");
-                intent.setPackage("com.facebook.katana");
-                startActivity(intent);
-            }
-        });
     }
 
     private void irPantallaPrincipal(){
