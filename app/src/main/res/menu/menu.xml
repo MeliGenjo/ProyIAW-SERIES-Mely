@@ -15,6 +15,10 @@
         android:id="@+id/itemUsuarios"
         android:title="Usuarios"
         />
+    <item
+        android:id="@+id/itemSeries"
+        android:title="Ver Series"
+        />
 
     <item
         android:id="@+id/itemCerrarApp"

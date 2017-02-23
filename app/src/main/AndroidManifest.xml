@@ -12,44 +12,44 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--- agregado para facebook -->
+        <!-- - agregado para facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <!--- agregado para facebook -->
+        <!-- - agregado para facebook -->
         <provider
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider557918394379082"
             android:exported="true" />
 
         <activity android:name=".MainActivity">
-          <intent-filter>
-              <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-              <category android:name="android.intent.category.LAUNCHER" />
-          </intent-filter>
-      </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-      <!--- agregado para facebook -->
+        <!-- - agregado para facebook
         <activity android:name="com.facebook.FacebookActivity">
             <intent-filter>
-                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-         </activity>
-
-   <activity android:name=".LoginActivity" />
-   <!--
+        </activity>
+        <activity android:name=".LoginActivity" />-->
+        <!--
 ATTENTION: This was auto-generated to add Google Play services to your project for
 App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-   -->
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".buscarActivity" />
-        <activity android:name=".ShareActivity"></activity>
+        <activity android:name=".ShareActivity" />
         <activity android:name=".UsuariosActivity" />
+        <activity android:name=".SeriesActivity"></activity>
     </application>
 
 </manifest>

@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (AccessToken.getCurrentAccessToken()== null) {
-            irPantallaLogin();
+            //irPantallaLogin();
         }
 
     }
@@ -100,6 +100,10 @@ public class MainActivity extends AppCompatActivity {
                 logout();
                 return true;
 
+            case R.id.itemSeries:
+                irPantallaSeries();
+                return true;
+
             case R.id.itemCerrarApp:
                 Toast.makeText(MainActivity.this, "Hasta luego!", Toast.LENGTH_SHORT).show();
                 finish();
@@ -109,6 +113,12 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void irPantallaSeries() {
+        Intent intent = new Intent(this, SeriesActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void irPantallaUsuarios() {
