@@ -177,6 +177,11 @@ public class buscarActivity extends AppCompatActivity {
                 }
 
 
+                if (jsonString.equals("[]")){
+                    output.append("La serie ingresada no existe");
+
+                }
+
                 //output.append(jsonString.toString());
                 buscarActivity.this.runOnUiThread(new Runnable() {
 
