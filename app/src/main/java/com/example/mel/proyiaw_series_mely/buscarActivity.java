@@ -31,6 +31,7 @@ public class buscarActivity extends AppCompatActivity {
 
     private Button home;
     private Button buscar;
+    private Button agregar_favoritos;
     private String sitio;
     private String serie_usuario;
     private EditText serie_ingresada;
@@ -69,6 +70,16 @@ public class buscarActivity extends AppCompatActivity {
         //Contenido de la serie buscada
         contenido_serie= (TextView) findViewById(R.id.contenidoSerie);
         nombre_serie=(TextView) findViewById(R.id.nombre_serie);
+
+
+        //Agrego una serie a favoritos
+        agregar_favoritos= (Button) findViewById(R.id.agregarAFavoritos);
+        agregar_favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                agregar_a_favoritos();
+            }
+        });
     }
 
     private void irPantallaPrincipal(){
@@ -77,11 +88,18 @@ public class buscarActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    private void agregar_a_favoritos(){
+
+    }
+
+    //CAMBIAR EL GET Y HACER QUE SOLO DEVUELVA EL JSON!!! DESPUES LO TRATO AFUERA DEL METODO 
     private void buscarSerie(){
         serie_usuario=serie_ingresada.getText().toString();
 
         if (!serie_usuario.equals("")) {
-            sitio= "http://api.tvmaze.com/search/shows?q=" + serie_usuario;
+           sitio= "http://api.tvmaze.com/search/shows?q=" + serie_usuario;
+            //sitio="http://api.tvmaze.com/singlesearch/shows?q="+ serie_usuario;
             //contenido_serie.setText(sitio);
             sendGetRequest(sitio,contenido_serie,nombre_serie);
         }
@@ -153,24 +171,26 @@ public class buscarActivity extends AppCompatActivity {
                     String name;
                    /* TextView nombre = (TextView) findViewById(R.id.nombreSerie);
                     nombre.setText("");*/
-                    for (int i=0; i<jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        JSONObject show= (JSONObject) jsonObject.get("show");
+                   //for (int i=0; i<jsonArray.length();i++){
+                    if(jsonArray.length()>0) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                        JSONObject show = (JSONObject) jsonObject.get("show");
                         String id_serie = show.optString("id").toString();
-                        output.append("Id serie: " + id_serie +"\n\n");
+                        output.append("Id serie: " + id_serie + "\n\n");
                         name = show.optString("name").toString();
-                        output.append("Nombre serie: " + name +"\n\n");
+                        output.append("Nombre serie: " + name + "\n\n");
                         String lenguaje = show.optString("language").toString();
-                        output.append("Lenguaje original: " + lenguaje +"\n\n");
+                        output.append("Lenguaje original: " + lenguaje + "\n\n");
                         String premiered = show.optString("premiered").toString();
                         output.append("Fecha de lanzamiento :" + premiered + "\n\n");
                         String summary = show.optString("summary").toString();
                         output.append("Resumen: " + summary + "\n\n");
                         JSONObject imagen = (JSONObject) show.get("image");
                         output.append(imagen.get("medium"));
+                    }
                         //obtener id serie
 
-                    }
+                    //}
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -180,6 +200,10 @@ public class buscarActivity extends AppCompatActivity {
                 if (jsonString.equals("[]")){
                     output.append("La serie ingresada no existe");
 
+                }
+                else{
+                    //Muestro el contenido y hago visibles los botones de agregar a favoritos y ver capitulos
+                   // agregar_favoritos.setVisibility(View.VISIBLE);
                 }
 
                 //output.append(jsonString.toString());

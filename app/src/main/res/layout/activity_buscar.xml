@@ -10,22 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.mel.proyiaw_series_mely.buscarActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buscar Series [Bren]"
-        android:id="@+id/textView"/>
-
-    <Button
-        android:text="Home"
-        android:layout_width="119dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnHome"
-        android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_marginTop="53dp" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,21 +33,12 @@
         android:layout_marginEnd="17dp"
         android:id="@+id/boton_buscar" />
 
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/texto_ingresado"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="32dp"
-        android:id="@+id/nombre_serie" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="23dp"
-        android:layout_below="@+id/nombre_serie"
+        android:layout_below="@+id/texto_ingresado"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
@@ -73,11 +48,43 @@
             android:orientation="vertical">
 
             <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:id="@+id/nombre_serie" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ver Capítulos"
+                android:id="@+id/verCapítulos"
+                android:visibility="gone"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agregar a Favoritos"
+                android:id="@+id/agregarAFavoritos"
+                android:visibility="gone"/>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/contenidoSerie" />
 
+
+
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:text="Home"
+        android:layout_width="119dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnHome"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
