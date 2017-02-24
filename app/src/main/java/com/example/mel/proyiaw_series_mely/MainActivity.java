@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (AccessToken.getCurrentAccessToken()== null) {
-            //irPantallaLogin();
+            irPantallaLogin();
         }
 
     }
