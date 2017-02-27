@@ -3,12 +3,17 @@ package com.example.mel.proyiaw_series_mely;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,12 +21,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -37,12 +45,14 @@ public class buscarActivity extends AppCompatActivity {
     private EditText serie_ingresada;
     private TextView contenido_serie;
     private TextView nombre_serie;
+    private ImageView imagen_serie;
     private ProgressDialog progress;
-
+    private String url_imagen_serie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_buscar);
 
         //Serie a buscar ingresada por el usuario
@@ -70,7 +80,7 @@ public class buscarActivity extends AppCompatActivity {
         //Contenido de la serie buscada
         contenido_serie= (TextView) findViewById(R.id.contenidoSerie);
         nombre_serie=(TextView) findViewById(R.id.nombre_serie);
-
+        imagen_serie = (ImageView)findViewById(R.id.imagen);
 
         //Agrego una serie a favoritos
         agregar_favoritos= (Button) findViewById(R.id.agregarAFavoritos);
@@ -93,14 +103,13 @@ public class buscarActivity extends AppCompatActivity {
 
     }
 
-    //CAMBIAR EL GET Y HACER QUE SOLO DEVUELVA EL JSON!!! DESPUES LO TRATO AFUERA DEL METODO 
+    //CAMBIAR EL GET Y HACER QUE SOLO DEVUELVA EL JSON!!! DESPUES LO TRATO AFUERA DEL METODO
     private void buscarSerie(){
         serie_usuario=serie_ingresada.getText().toString();
 
         if (!serie_usuario.equals("")) {
            sitio= "http://api.tvmaze.com/search/shows?q=" + serie_usuario;
-            //sitio="http://api.tvmaze.com/singlesearch/shows?q="+ serie_usuario;
-            //contenido_serie.setText(sitio);
+            //Cargo el contenido de la serie
             sendGetRequest(sitio,contenido_serie,nombre_serie);
         }
         else{
@@ -109,10 +118,13 @@ public class buscarActivity extends AppCompatActivity {
         }
     }
 
+
     public void sendGetRequest(String sitio,TextView datosSerie,TextView nombre) {
 
        new GetClass(this,sitio,datosSerie,nombre).execute();
     }
+
+
 
     private class GetClass extends AsyncTask<String, Void, Void> {
         private final Context context;
@@ -120,11 +132,38 @@ public class buscarActivity extends AppCompatActivity {
         private final TextView datosSerie;
         private final TextView nombre;
 
+        //Atributos de la serie obtenidos del JSon
+        protected String json;
+        protected String nombre_string;
+        protected String id_serie;
+        protected String horario;
+        protected String [] dias;
+        protected String duración;
+        protected String descripcion;
+        protected String genero;
+        protected String puntaje;
+        protected String año;
+        protected String url_imagen;
+
+
         public GetClass(Context c, String sitio, TextView datosSerie,TextView nombre){
             this.context = c;
             this.sitio=sitio;
             this.datosSerie=datosSerie;
             this.nombre=nombre;
+
+            //Inicializo valores de la serie a buscar
+            json="";
+            nombre_string="";
+            id_serie="";
+            horario="";
+            //dias= new String[5];
+            duración="";
+            descripcion="";
+            genero= "";
+            puntaje="";
+            año="";
+            url_imagen="";
         }
 
         protected void onPreExecute(){
@@ -154,39 +193,43 @@ public class buscarActivity extends AppCompatActivity {
                 final StringBuilder output = new StringBuilder("");
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-                String jsonString="";
+               // String jsonString="";
+
 
                 String line = "";
                // StringBuilder responseOutput = new StringBuilder();
                 System.out.println("output===============" + br);
                 while((line = br.readLine()) != null ) {
                     // responseOutput.append(line);
-                    jsonString+=line; //meti todo el json aca
+                    json+=line; //meti todo el json aca
                 }
                 br.close();
 
 
                 try {
-                    JSONArray jsonArray = new JSONArray(jsonString);
-                    String name;
+                    JSONArray jsonArray = new JSONArray(json);
+                    //String name;
                    /* TextView nombre = (TextView) findViewById(R.id.nombreSerie);
                     nombre.setText("");*/
                    //for (int i=0; i<jsonArray.length();i++){
                     if(jsonArray.length()>0) {
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         JSONObject show = (JSONObject) jsonObject.get("show");
-                        String id_serie = show.optString("id").toString();
+                        id_serie = show.optString("id").toString();
                         output.append("Id serie: " + id_serie + "\n\n");
-                        name = show.optString("name").toString();
-                        output.append("Nombre serie: " + name + "\n\n");
+                        nombre_string = show.optString("name").toString();
+                        //nombre_serie.setText(name);
+                        output.append("Nombre serie: " + nombre_string + "\n\n");
                         String lenguaje = show.optString("language").toString();
                         output.append("Lenguaje original: " + lenguaje + "\n\n");
+
                         String premiered = show.optString("premiered").toString();
                         output.append("Fecha de lanzamiento :" + premiered + "\n\n");
-                        String summary = show.optString("summary").toString();
-                        output.append("Resumen: " + summary + "\n\n");
+                        descripcion = show.optString("summary").toString();
+                        output.append("Resumen: " + descripcion + "\n\n");
                         JSONObject imagen = (JSONObject) show.get("image");
-                        output.append(imagen.get("medium"));
+                        url_imagen = imagen.get("medium").toString();
+                        //output.append(imagen.get("medium"));
                     }
                         //obtener id serie
 
@@ -197,7 +240,7 @@ public class buscarActivity extends AppCompatActivity {
                 }
 
 
-                if (jsonString.equals("[]")){
+                if (json.equals("[]")){
                     output.append("La serie ingresada no existe");
 
                 }
@@ -211,8 +254,17 @@ public class buscarActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
+                        //datosSerie.setText(descripcion);
                         datosSerie.setText(output);
+                        nombre.setText(nombre_string);
                         progress.dismiss();
+                        url_imagen_serie=url_imagen;
+                        if(url_imagen_serie!=null){
+                            String msj="ESTOY EN EL TOAST CON este msj: "+url_imagen_serie;
+                            Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
+                            cargar_imagen(url_imagen_serie);
+                        }
+                        //cargar_imagen(url_imagen);
 
                     }
                 });
@@ -229,8 +281,77 @@ public class buscarActivity extends AppCompatActivity {
         }
 
 
-    } //fin GetClass
+        private void cargar_imagen(String url){
+            if(url!=null){
+                //url="http://tvmazecdn.com/uploads/images/medium_portrait/47/119740.jpg";
+                CargaImagenes nuevaTarea = new CargaImagenes();
+                nuevaTarea.execute(url);}
+            else {
+                String msj="La imagen no ha sido cargada";
+                Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
+            }
+        }
 
 
 
-}
+    }//GetClass
+
+
+    private class CargaImagenes extends AsyncTask<String, Void, Bitmap>{
+
+        ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+
+            pDialog = new ProgressDialog(buscarActivity.this);
+            pDialog.setMessage("Cargando Imagen");
+            pDialog.setCancelable(true);
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            // TODO Auto-generated method stub
+            Log.i("doInBackground" , "Entra en doInBackground");
+            String url = params[0];
+            Bitmap imagen = descargarImagen(url);
+            return imagen;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+
+            imagen_serie.setImageBitmap(result);
+            pDialog.dismiss();
+        }
+
+        private Bitmap descargarImagen (String imageHttpAddress){
+            URL imageUrl = null;
+            Bitmap imagen = null;
+            try{
+                imageUrl = new URL(imageHttpAddress);
+                HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+                conn.connect();
+                imagen = BitmapFactory.decodeStream(conn.getInputStream());
+            }catch(IOException ex){
+                ex.printStackTrace();
+            }
+
+            return imagen;
+        }
+
+    }
+
+
+    }
+
+
+
+
