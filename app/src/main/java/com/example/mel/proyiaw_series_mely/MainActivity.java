@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnBuscar;
     private String nameUser;
     private Uri img;
-
+   // private envioNotificaciones controlNot= new envioNotificaciones();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             String foto = img.toString();
             Picasso.with(getApplicationContext()).load(foto).into(fotoPerfil); //seteo la foto al imageView
             txt.setText("Hola " + nameUser + "!");
+           // controlNot.controlNotificaciones(profile.getId());
         }
     }
 

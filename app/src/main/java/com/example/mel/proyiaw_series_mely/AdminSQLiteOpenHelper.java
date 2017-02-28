@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.view.View;
 import android.widget.Toast;
@@ -29,6 +30,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionPosterior) {
         db.execSQL("drop table if exists usuario");
         db.execSQL("create table usuario (id integer primary key autoincrement, idFace integer, nombreApellido text, tema text)");
+        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie integer,idUsuario integer)");
+        db.execSQL("create table serie_capitulo (id integer primary key autoincrement, idSerie integer,idCapitulo integer)");
     }
 
     public ArrayList<String> llenarLista() {
@@ -50,6 +53,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     public String altaUsuario(String idF, String nom) {
+
 
         SQLiteDatabase bd = this.getWritableDatabase();
         String msj;
@@ -78,4 +82,30 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         return msj;
     }
 
+    public ArrayList<Integer> obtenerSeries(String usuario) {
+        ArrayList<Integer> listaSeries = new ArrayList<>();
+
+        SQLiteDatabase bd = this.getWritableDatabase();
+        String q = "SELECT idSerie FROM usuario_serie where idUsuario="+usuario;
+        Cursor registros = bd.rawQuery(q,null);
+        if (registros.moveToFirst()){
+            //copio todos los usuarios a la lista
+            do{
+                listaSeries.add(registros.getInt(1));
+            } while (registros.moveToNext());
+
+        }
+        return listaSeries;
+    }
+
+    public boolean guardarFavoritas(String idUsuario,Integer idSerie){
+        SQLiteDatabase bd = this.getWritableDatabase();
+        try {
+            bd.execSQL("insert table usuario_serie(idSerie ,idUsuario) values ("+idSerie+","+idUsuario+")");
+        }catch(SQLiteException e){
+            return false;
+        }
+            return true;
+
+    }
 }

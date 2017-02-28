@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "90572667968",
+    "firebase_url": "https://proyiaw-series-mely.firebaseio.com",
+    "project_id": "proyiaw-series-mely",
+    "storage_bucket": "proyiaw-series-mely.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90572667968:android:2e7b2009cd16d445",
+        "android_client_info": {
+          "package_name": "com.example.mel.proyiaw_series_mely"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90572667968-93hp8t09l81taku8d69p916gjdofnvl0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvNSs23yCNsV5hTVzc0szIiQO835VjzCE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
