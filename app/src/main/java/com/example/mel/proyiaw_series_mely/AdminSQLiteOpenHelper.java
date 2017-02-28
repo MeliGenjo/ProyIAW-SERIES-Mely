@@ -7,13 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
-
+    private static final String APP_TAG = "SERIES" ;
     //Constructor
     public AdminSQLiteOpenHelper(Context context, String nombre, CursorFactory factory, int version) {
         super(context, "DBAppSeries", factory, version);
@@ -23,15 +24,24 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table usuario (id integer primary key autoincrement, idFace integer, nombreApellido text, tema text)");
+        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie text,idUsuario integer)");
+        db.execSQL("create table serie_capitulo (id integer primary key autoincrement, idSerie text,idCapitulo text)");
     }
 
     //Borrar las tablas y crear las nuevas tablas
     @Override
     public void onUpgrade(SQLiteDatabase db, int versionAnterior, int versionPosterior) {
+        try {
         db.execSQL("drop table if exists usuario");
-        db.execSQL("create table usuario (id integer primary key autoincrement, idFace integer, nombreApellido text, tema text)");
-        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie integer,idUsuario integer)");
-        db.execSQL("create table serie_capitulo (id integer primary key autoincrement, idSerie integer,idCapitulo integer)");
+        db.execSQL("create table usuario (id integer primary key autoincrement, idFace integer, nombreApellido text, tema text);");
+        db.execSQL("drop table if exists usuario_serie");
+        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie text,idUsuario integer);");
+        db.execSQL("drop table if exists serie_capitulo");
+        db.execSQL("create table serie_capitulo (id integer primary key autoincrement, idSerie text,idCapitulo text);");
+
+        }catch(SQLiteException e){
+            String  error =e.getMessage();
+            Log.d(APP_TAG,error);}
     }
 
     public ArrayList<String> llenarLista() {
@@ -98,11 +108,13 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         return listaSeries;
     }
 
-    public boolean guardarFavoritas(String idUsuario,Integer idSerie){
+    public boolean guardarFavoritas(String idUsuario,String idSerie){
         SQLiteDatabase bd = this.getWritableDatabase();
         try {
-            bd.execSQL("insert table usuario_serie(idSerie ,idUsuario) values ("+idSerie+","+idUsuario+")");
+            bd.execSQL("INSERT INTO usuario_serie(idSerie ,idUsuario) values (\""+idSerie+"\","+idUsuario+")");
         }catch(SQLiteException e){
+           String  error =e.getMessage();
+            Log.d(APP_TAG,error);
             return false;
         }
             return true;

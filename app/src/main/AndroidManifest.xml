@@ -50,6 +50,8 @@ App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         <activity android:name=".ShareActivity" />
         <activity android:name=".UsuariosActivity" />
         <activity android:name=".SeriesActivity"></activity>
+        <activity android:name=".CapitulosActivity"/>
+
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>

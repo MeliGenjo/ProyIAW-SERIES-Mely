@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.Profile;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +33,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static android.R.attr.visible;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -40,6 +43,8 @@ public class buscarActivity extends AppCompatActivity {
     private Button home;
     private Button buscar;
     private Button agregar_favoritos;
+    private Button verCapitulos;
+    private String idSerie;
     private String sitio;
     private String serie_usuario;
     private EditText serie_ingresada;
@@ -87,7 +92,18 @@ public class buscarActivity extends AppCompatActivity {
         agregar_favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                agregar_a_favoritos();
+                Profile profile = Profile.getCurrentProfile();
+                if (profile != null) {
+                    agregar_a_favoritos(profile.getId(), idSerie);
+                }
+            }
+        });
+
+        verCapitulos= (Button) findViewById(R.id.verCapitulos);
+        verCapitulos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irPantallaCapitulos();
             }
         });
     }
@@ -99,8 +115,17 @@ public class buscarActivity extends AppCompatActivity {
     }
 
 
-    private void agregar_a_favoritos(){
+    private void agregar_a_favoritos(String usuario, String  serie){
+        AdminSQLiteOpenHelper sql= new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
 
+       boolean guardarFav= sql.guardarFavoritas(usuario,serie);
+        String msj;
+        if (guardarFav){
+            msj="La serie se agrego a sus favoritas con éxito";
+        }else{
+            msj="Hubo un error al guardar como favorita su serie";
+        }
+         Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
     }
 
     //CAMBIAR EL GET Y HACER QUE SOLO DEVUELVA EL JSON!!! DESPUES LO TRATO AFUERA DEL METODO
@@ -114,6 +139,9 @@ public class buscarActivity extends AppCompatActivity {
             //Cargo el contenido de la serie
             //contenido_serie.setText(sitio);
             sendGetRequest(sitio,contenido_serie,nombre_serie);
+            agregar_favoritos.setVisibility(View.VISIBLE);
+            verCapitulos.setVisibility(View.VISIBLE);
+
         }
         else{
             String msj="Ingrese el nombre de la serie a buscar";
@@ -127,7 +155,12 @@ public class buscarActivity extends AppCompatActivity {
        new GetClass(this,sitio,datosSerie,nombre).execute();
     }
 
-
+        /* pantalla de capitulos favoritos*/
+    private void irPantallaCapitulos() {
+        Intent intent = new Intent(this, CapitulosActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
     /*********************************************************************************************
      *                   Clase para la obtención de datos de la serie
      *********************************************************************************************/
@@ -233,7 +266,7 @@ public class buscarActivity extends AppCompatActivity {
 
                         id_serie = show.optString("id").toString();
                         output.append("Id serie: " + id_serie + "\n\n");
-
+                        idSerie=id_serie;
                         nombre_string = show.optString("name").toString();
 
                         JSONObject schedule = (JSONObject) show.get("schedule");
