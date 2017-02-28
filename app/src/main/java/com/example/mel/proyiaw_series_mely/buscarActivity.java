@@ -108,8 +108,11 @@ public class buscarActivity extends AppCompatActivity {
         serie_usuario=serie_ingresada.getText().toString();
 
         if (!serie_usuario.equals("")) {
-           sitio= "http://api.tvmaze.com/search/shows?q=" + serie_usuario;
+          //sitio= "http://api.tvmaze.com/search/shows?q="+serie_usuario+"&page=1";
+            sitio= "http://api.tvmaze.com/search/shows?q="+serie_usuario;
+            // sitio= "http://api.tvmaze.com/singlesearch/shows?q=" + serie_usuario;
             //Cargo el contenido de la serie
+            //contenido_serie.setText(sitio);
             sendGetRequest(sitio,contenido_serie,nombre_serie);
         }
         else{
@@ -125,6 +128,9 @@ public class buscarActivity extends AppCompatActivity {
     }
 
 
+    /*********************************************************************************************
+     *                   Clase para la obtención de datos de la serie
+     *********************************************************************************************/
 
     private class GetClass extends AsyncTask<String, Void, Void> {
         private final Context context;
@@ -138,9 +144,9 @@ public class buscarActivity extends AppCompatActivity {
         protected String id_serie;
         protected String horario;
         protected String [] dias;
-        protected String duración;
+        protected String duracion;
         protected String descripcion;
-        protected String genero;
+        protected String [] genero;
         protected String puntaje;
         protected String año;
         protected String url_imagen;
@@ -157,10 +163,10 @@ public class buscarActivity extends AppCompatActivity {
             nombre_string="";
             id_serie="";
             horario="";
-            //dias= new String[5];
-            duración="";
+            dias= new String[5];
+            duracion="";
             descripcion="";
-            genero= "";
+            genero= new String[3];
             puntaje="";
             año="";
             url_imagen="";
@@ -190,6 +196,11 @@ public class buscarActivity extends AppCompatActivity {
                 System.out.println("Post parameters : " + urlParameters);
                 System.out.println("Response Code : " + responseCode);
 
+                /*if(responseCode != HttpURLConnection.HTTP_OK){
+                    String msj="NO ES 200 OK: "+url_imagen_serie;
+                    Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
+                }*/
+
                 final StringBuilder output = new StringBuilder("");
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
@@ -212,21 +223,34 @@ public class buscarActivity extends AppCompatActivity {
                    /* TextView nombre = (TextView) findViewById(R.id.nombreSerie);
                     nombre.setText("");*/
                    //for (int i=0; i<jsonArray.length();i++){
+
+
+                    //Me faltan obtener los dias y el género pero son arreglos y no me deja obtener
+                    //el arreglo como un arreglo, sino que me lo setea a string -> tengo que ver eso 
                     if(jsonArray.length()>0) {
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         JSONObject show = (JSONObject) jsonObject.get("show");
+
                         id_serie = show.optString("id").toString();
                         output.append("Id serie: " + id_serie + "\n\n");
+
                         nombre_string = show.optString("name").toString();
-                        //nombre_serie.setText(name);
-                        output.append("Nombre serie: " + nombre_string + "\n\n");
-                        String lenguaje = show.optString("language").toString();
-                        output.append("Lenguaje original: " + lenguaje + "\n\n");
+
+                        JSONObject schedule = (JSONObject) show.get("schedule");
+                        horario=schedule.optString("time").toString();
+                        output.append("Horario: " + horario + "\n\n");
+                       // dias=schedule.optString("days");
+
+                        duracion=show.optString("runtime").toString();
+                        output.append("Duración: " + duracion + "minutos"+ "\n\n");
+
 
                         String premiered = show.optString("premiered").toString();
                         output.append("Fecha de lanzamiento :" + premiered + "\n\n");
+
                         descripcion = show.optString("summary").toString();
                         output.append("Resumen: " + descripcion + "\n\n");
+
                         JSONObject imagen = (JSONObject) show.get("image");
                         url_imagen = imagen.get("medium").toString();
                         //output.append(imagen.get("medium"));
@@ -259,13 +283,7 @@ public class buscarActivity extends AppCompatActivity {
                         nombre.setText(nombre_string);
                         progress.dismiss();
                         url_imagen_serie=url_imagen;
-                        if(url_imagen_serie!=null){
-                            String msj="ESTOY EN EL TOAST CON este msj: "+url_imagen_serie;
-                            Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
-                            cargar_imagen(url_imagen_serie);
-                        }
-                        //cargar_imagen(url_imagen);
-
+                        cargar_imagen(url_imagen);
                     }
                 });
 
@@ -283,7 +301,6 @@ public class buscarActivity extends AppCompatActivity {
 
         private void cargar_imagen(String url){
             if(url!=null){
-                //url="http://tvmazecdn.com/uploads/images/medium_portrait/47/119740.jpg";
                 CargaImagenes nuevaTarea = new CargaImagenes();
                 nuevaTarea.execute(url);}
             else {
@@ -296,6 +313,10 @@ public class buscarActivity extends AppCompatActivity {
 
     }//GetClass
 
+
+    /*********************************************************************************************
+     *                   Clase para la carga de imágenes de la serie
+     *********************************************************************************************/
 
     private class CargaImagenes extends AsyncTask<String, Void, Bitmap>{
 
