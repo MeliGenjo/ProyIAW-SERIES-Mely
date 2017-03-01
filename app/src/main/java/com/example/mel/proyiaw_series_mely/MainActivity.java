@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private  ImageView fotoPerfil;
     private  TextView txt;
     private Button btnBuscar;
+    private Button btnAgenda;
     private String nameUser;
     private Uri img;
    // private envioNotificaciones controlNot= new envioNotificaciones();
@@ -44,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 irPantallaBuscar();
+            }
+        });
+
+        btnAgenda= (Button) findViewById(R.id.verAgenda);
+        btnAgenda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irPantallaAgenda();
             }
         });
 
@@ -136,6 +145,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void irPantallaBuscar() {
         Intent intent = new Intent(this, buscarActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void irPantallaAgenda(){
+        Intent intent = new Intent(this, AgendaActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

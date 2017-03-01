@@ -82,7 +82,7 @@
         android:layout_below="@+id/button4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/button5" />
+        android:id="@+id/verAgenda" />
 
     <Button
         android:text="Obtener recomendaciones"
