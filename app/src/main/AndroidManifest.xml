@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".SeriesApp"
+        android:name=".AppController"
         android:allowBackup="true"
         android:icon="@mipmap/icono"
         android:label="@string/app_name"
@@ -63,7 +63,8 @@ App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
             </intent-filter>
         </service>
 
-        <activity android:name=".AgendaActivity"></activity>
+        <activity android:name=".AgendaActivity" />
+        <activity android:name=".MostrarSeriesActivity"></activity>
     </application>
 
 </manifest>

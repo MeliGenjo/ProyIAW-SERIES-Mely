@@ -4,4 +4,8 @@
     <string name="facebook_app_id">557918394379082</string>
     <string name="login_cancel">Se canceló el inicio de sesión</string>
     <string name="login_error">Se produjo un error al iniciar sesión</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="test">Test text string</string>
 </resources>

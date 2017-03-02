@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:text="Ver primero Genero:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_weight="0.09" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:weightSum="1"
+        android:layout_weight="0.31">
+
+        <Button
+            android:text="Action"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/bAction"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:text="Drama"
+            android:layout_width="69dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bDrama"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:text="Horror"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bHorror"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:text="Romance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bRomance"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <Button
+            android:text="Adventure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bAdventure"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:text="Fantasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bFantasy"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:text="Thriller"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bThriller"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:text="Crime"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bCrime"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_item"
+        android:layout_width="match_parent"
+        android:layout_height="318dp"
+        android:dividerHeight="5dp"
+        android:listSelector="@drawable/list_row_select"
+
+        >
+    </ListView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:text="Mostrar más..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnMostrarMas"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+    </LinearLayout>
+
+</LinearLayout >

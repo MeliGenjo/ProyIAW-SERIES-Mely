@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private  ImageView fotoPerfil;
     private  TextView txt;
     private Button btnBuscar;
-    private Button btnAgenda;
+    private Button btnAgenda, verSeries;
     private String nameUser;
     private Uri img;
    // private envioNotificaciones controlNot= new envioNotificaciones();
@@ -39,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setearDatosUsuarios();
+
+        verSeries = (Button) findViewById(R.id.verSeries);
+        verSeries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irPantallaVerSeries();
+            }
+        });
 
         btnBuscar = (Button) findViewById(R.id.btnBuscar);
         btnBuscar.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
         if (AccessToken.getCurrentAccessToken()== null) {
             irPantallaLogin();
         }
+
+    }
+
+    private void irPantallaVerSeries() {
+        Intent intent = new Intent(this, MostrarSeriesActivity.class);
+        Toast.makeText(getApplicationContext(), "Ir a ver series ", Toast.LENGTH_SHORT).show();
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
     }
 
