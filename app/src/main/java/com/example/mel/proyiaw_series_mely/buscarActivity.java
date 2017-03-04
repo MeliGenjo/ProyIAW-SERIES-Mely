@@ -11,12 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.facebook.Profile;
 
 import org.json.JSONArray;
@@ -32,6 +37,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.R.attr.visible;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
@@ -47,12 +54,17 @@ public class buscarActivity extends AppCompatActivity {
     private String idSerie;
     private String sitio;
     private String serie_usuario;
-    private EditText serie_ingresada;
+   // private EditText serie_ingresada;
     private TextView contenido_serie;
     private TextView nombre_serie;
     private ImageView imagen_serie;
     private ProgressDialog progress;
     private String url_imagen_serie;
+
+    //Autocomplete
+    private List<String> arreglo_nombres = new ArrayList<String>();
+    JsonArrayRequest jsonArrayRequest;
+    AutoCompleteTextView autocompletar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +72,13 @@ public class buscarActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_buscar);
 
+        autocompletar= (AutoCompleteTextView) findViewById (R.id.texto_ingresado);
+        crear_arreglo_nombres();
+        AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
+
         //Serie a buscar ingresada por el usuario
         serie_usuario="";
-        serie_ingresada= (EditText) findViewById(R.id.texto_ingresado);
+        //serie_ingresada= (EditText) findViewById(R.id.texto_ingresado);
 
         //Boton para volver al home
         home = (Button) findViewById(R.id.btnHome);
@@ -109,6 +125,48 @@ public class buscarActivity extends AppCompatActivity {
         });
     }
 
+
+    private void crear_arreglo_nombres(){
+        String url="";
+
+        for(int i=0; i<100;i++) {
+            url = "http://api.tvmaze.com/shows?page="+i;
+            inicializarListaNombres(url);
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.select_dialog_item,arreglo_nombres);
+        autocompletar.setThreshold(1);
+        autocompletar.setAdapter(adapter);
+    }
+
+    private void inicializarListaNombres(String url){
+
+        jsonArrayRequest=new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //parsing json
+                for(int i=0;i<response.length();i++){
+                    try{
+                        JSONObject obj=response.getJSONObject(i);
+                        arreglo_nombres.add(obj.getString("name"));
+                        Log.i("AGREGANDO", "Estoy agregando "+obj.getString("name")+" a la lista de nombres");
+
+
+                    }catch(JSONException ex){
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+
+    }
+
     private void irPantallaPrincipal(){
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
@@ -131,7 +189,7 @@ public class buscarActivity extends AppCompatActivity {
 
     //CAMBIAR EL GET Y HACER QUE SOLO DEVUELVA EL JSON!!! DESPUES LO TRATO AFUERA DEL METODO
     private void buscarSerie(){
-        serie_usuario=serie_ingresada.getText().toString();
+        serie_usuario=autocompletar.getText().toString();
 
         if (!serie_usuario.equals("")) {
           //sitio= "http://api.tvmaze.com/search/shows?q="+serie_usuario+"&page=1";
@@ -260,7 +318,7 @@ public class buscarActivity extends AppCompatActivity {
 
 
                     //Me faltan obtener los dias y el género pero son arreglos y no me deja obtener
-                    //el arreglo como un arreglo, sino que me lo setea a string -> tengo que ver eso 
+                    //el arreglo como un arreglo, sino que me lo setea a string -> tengo que ver eso
                     if(jsonArray.length()>0) {
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         JSONObject show = (JSONObject) jsonObject.get("show");
