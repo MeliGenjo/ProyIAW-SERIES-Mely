@@ -22,15 +22,14 @@
         android:text="Ver primero Genero:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_weight="0.01" />
+        android:id="@+id/txt" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="51dp"
         android:weightSum="1"
-        android:layout_weight="0.03">
+        android:layout_weight="0.00">
 
         <Button
             android:text="Action"
@@ -64,39 +63,46 @@
 
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:orientation="horizontal">
 
         <Button
-            android:text="Adventure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/bAdventure"
-            android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.AppCompat" />
-
-        <Button
-            android:text="Fantasy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bFantasy"
+            android:layout_weight="1"
+            android:text="Adventure"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
-            android:text="Thriller"
+            android:id="@+id/bFantasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fantasy"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Button
+            android:id="@+id/bThriller"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:id="@+id/bThriller"
+            android:text="Thriller"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
-            android:text="Crime"
+            android:id="@+id/bCrime"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:id="@+id/bCrime"
+            android:text="Crime"
             android:textAppearance="@style/TextAppearance.AppCompat" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textSinFavoritos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01"
+        android:text="TextView" />
 
     <ListView
         android:id="@+id/list_item"

@@ -35,7 +35,6 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
     private int IDserie;
     private String url = "http://api.tvmaze.com/shows/"+ IDserie;
 
-    private ProgressDialog dialog;
     private List<Item> array = new ArrayList<Item>();
     private ListView listView;
     private Adapter adapter;
@@ -55,10 +54,6 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
         adapter=new Adapter(this,array);
         listView.setAdapter(adapter);
 
-        /*dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando Series Favoritas...");
-        dialog.show();*/
-
         Profile profile = Profile.getCurrentProfile();
         AdminSQLiteOpenHelper sql= new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
 
@@ -67,17 +62,15 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
             idSeriesFavoritas = sql.obtenerSeries(profile.getId());
 
             if (idSeriesFavoritas.size()==0){
-                sinFavoritos = (TextView) findViewById(R.id.textView);
+                sinFavoritos = (TextView) findViewById(R.id.textSinFavoritos);
                 sinFavoritos.setText("Aún no tienes series favoritas");
             }
             else {
                 inicializarBotonGeneros();
-
                 for (int i = 0; i < idSeriesFavoritas.size(); i++) {
                     urlFavoritos.add("http://api.tvmaze.com/shows/" + idSeriesFavoritas.get(i));
                 }
-
-                Toast.makeText(getApplicationContext(), "CANT URL " + urlFavoritos.size(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "CANT URL " + urlFavoritos.size(), Toast.LENGTH_SHORT).show();
                 inicializarLista(urlFavoritos);
             }
         }
@@ -172,7 +165,7 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(JSONObject response) {
-                    //hideDialog();
+
                     try {
                         JSONObject obj = response;
                         Item item = new Item();
@@ -185,13 +178,20 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
 
                         //rating es un json, el puntaje esta dentro de average
                         JSONObject puntaje = obj.getJSONObject("rating");
-                        double ptj = puntaje.getDouble("average");
+                        String average = puntaje.getString("average");
+                        double ptj =0;
+                        if (!average.equals("null"))
+                            ptj = puntaje.getDouble("average");
                         item.setRate(ptj);
 
                         //premiered es una fecha tipo anio-mes-dia
                         String fecha = obj.getString("premiered");
-                        String[] datos = fecha.split("-");
-                        int anio = Integer.parseInt(datos[0]);
+                        int anio = 0;
+                        if (!fecha.equals("null")) {
+                            String[] datos = fecha.split("-");
+                            if (!datos[0].equals("null"))
+                                anio = Integer.parseInt(datos[0]);
+                        }
                         item.setYear(anio);
 
                         //genre is json array
@@ -204,11 +204,10 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
 
                         //add to array
                         array.add(item);
-                        Log.e("Serie", "AGREGUE SERIE "+ item.getTitle());
-
 
                     } catch (JSONException ex) {
-                        ex.printStackTrace();
+                        //ex.printStackTrace();
+                        Log.e("JSON Error", "Error en jsObjRequest con la URL: "+jsObjRequest.getUrl());
                     }
 
                     adapter.notifyDataSetChanged();
@@ -216,12 +215,11 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    Log.e("JSON Error","onErrorResponse de inicializarLista" );
                 }
             });
 
             AppController.getmInstance().addToRequesQueue(jsObjRequest);
-            Log.e("URL",jsObjRequest.getUrl() );
         }
         adapter.notifyDataSetChanged();
 
@@ -261,12 +259,7 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
 
     }
 
-    public void hideDialog(){
-        if(dialog !=null){
-            dialog.dismiss();
-            dialog=null;
-        }
-    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
