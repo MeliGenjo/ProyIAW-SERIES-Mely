@@ -9,6 +9,8 @@
         app:showAsAction="never"
         />
 
+
+
     <item
         android:id="@+id/sortNombre"
         android:title="Ordenar por nombre"
@@ -35,6 +37,12 @@
         app:showAsAction="never"
         />
 
+    <item
+        android:id="@+id/buscarSerie"
+        android:title="Buscar una serie"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        />
 
 
 </menu>

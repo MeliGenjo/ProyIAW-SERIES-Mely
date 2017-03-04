@@ -10,100 +10,66 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.facebook.Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 
-import static android.R.attr.visible;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class buscarActivity extends AppCompatActivity {
+public class verItemSerieActivity extends AppCompatActivity {
 
+    private String titulo;
 
-    private Button home;
-    private Button buscar;
+    private String sitio;
+    private String genero;
+    private String idSerie;
+    private String año;
+    private String rate;
+
+    private TextView nombre_serie;
+    private TextView contenido_serie;
+    private ImageView imagen_serie;
     private Button agregar_favoritos;
     private Button verCapitulos;
-    private String idSerie;
-    private String sitio;
-    private String serie_usuario;
-   // private EditText serie_ingresada;
-    private TextView contenido_serie;
-    private TextView nombre_serie;
-    private ImageView imagen_serie;
     private ProgressDialog progress;
-
-
-    //Autocomplete
-    private List<String> arreglo_nombres = new ArrayList<String>();
-    JsonArrayRequest jsonArrayRequest;
-    AutoCompleteTextView autocompletar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ver_item_serie);
 
-        setContentView(R.layout.activity_buscar);
+        titulo = getIntent().getStringExtra("titulo");
+        nombre_serie= (TextView) findViewById(R.id.titulo);
+        nombre_serie.setText(titulo);
 
-        autocompletar= (AutoCompleteTextView) findViewById (R.id.texto_ingresado);
-        crear_arreglo_nombres();
-        AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
+        contenido_serie= (TextView) findViewById(R.id.contenido);
+        imagen_serie = (ImageView) findViewById(R.id.image);
 
-        //Serie a buscar ingresada por el usuario
-        serie_usuario="";
-        //serie_ingresada= (EditText) findViewById(R.id.texto_ingresado);
-
-        //Boton para volver al home
-        home = (Button) findViewById(R.id.btnHome);
-        home.setOnClickListener(new View.OnClickListener() {
+        verCapitulos = (Button) findViewById(R.id.verCap);
+        verCapitulos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                irPantallaPrincipal();
+                irPantallaCapitulos();
             }
         });
-
-        //Boton para buscar la serie
-        buscar = (Button) findViewById(R.id.boton_buscar);
-        buscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buscarSerie();
-            }
-        });
-
-        //Contenido de la serie buscada
-        contenido_serie= (TextView) findViewById(R.id.contenidoSerie);
-        nombre_serie=(TextView) findViewById(R.id.nombre_serie);
-        imagen_serie = (ImageView)findViewById(R.id.imagen);
 
         //Agrego una serie a favoritos
-        agregar_favoritos= (Button) findViewById(R.id.agregarAFavoritos);
+        agregar_favoritos= (Button) findViewById(R.id.agregarFav);
         agregar_favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,56 +81,9 @@ public class buscarActivity extends AppCompatActivity {
             }
         });
 
-        verCapitulos= (Button) findViewById(R.id.verCapitulos);
-        verCapitulos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                irPantallaCapitulos();
-            }
-        });
+        buscarSerie();
     }
 
-
-    private void crear_arreglo_nombres(){
-        String url="";
-
-        for(int i=0; i<100;i++) {
-            url = "http://api.tvmaze.com/shows?page="+i;
-            inicializarListaNombres(url);
-        }
-
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.select_dialog_item,arreglo_nombres);
-        autocompletar.setThreshold(1);
-        autocompletar.setAdapter(adapter);
-    }
-
-    private void inicializarListaNombres(String url){
-
-        jsonArrayRequest=new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                //parsing json
-                for(int i=0;i<response.length();i++){
-                    try{
-                        JSONObject obj=response.getJSONObject(i);
-                        arreglo_nombres.add(obj.getString("name"));
-                        Log.i("AGREGANDO", "Estoy agregando "+obj.getString("name")+" a la lista de nombres");
-
-
-                    }catch(JSONException ex){
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-
-    }
 
     private void irPantallaPrincipal(){
         Intent intent = new Intent(this, MainActivity.class);
@@ -172,53 +91,42 @@ public class buscarActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /* pantalla de capitulos favoritos*/
+    private void irPantallaCapitulos() {
+        Intent intent = new Intent(this, CapitulosActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     private void agregar_a_favoritos(String usuario, String  serie){
         AdminSQLiteOpenHelper sql= new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
 
-       boolean guardarFav= sql.guardarFavoritas(usuario,serie);
+        boolean guardarFav= sql.guardarFavoritas(usuario,serie);
         String msj;
         if (guardarFav){
             msj="La serie se agrego a sus favoritas con éxito";
         }else{
             msj="Hubo un error al guardar como favorita su serie";
         }
-         Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
     }
 
-
     private void buscarSerie(){
-        serie_usuario=autocompletar.getText().toString();
 
-        if (!serie_usuario.equals("")) {
-          //sitio= "http://api.tvmaze.com/search/shows?q="+serie_usuario+"&page=1";
-            sitio= "http://api.tvmaze.com/search/shows?q="+serie_usuario;
-            // sitio= "http://api.tvmaze.com/singlesearch/shows?q=" + serie_usuario;
-            //Cargo el contenido de la serie
-            //contenido_serie.setText(sitio);
+            sitio= "http://api.tvmaze.com/search/shows?q="+titulo;
             sendGetRequest(sitio,contenido_serie,nombre_serie);
             agregar_favoritos.setVisibility(View.VISIBLE);
             verCapitulos.setVisibility(View.VISIBLE);
 
-        }
-        else{
-            String msj="Ingrese el nombre de la serie a buscar";
-            Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
-        }
-    }
 
+    }
 
     public void sendGetRequest(String sitio,TextView datosSerie,TextView nombre) {
 
-       new GetClass(this,sitio,datosSerie,nombre).execute();
+        new GetClass(this,sitio,datosSerie,nombre).execute();
     }
 
-        /* pantalla de capitulos favoritos*/
-    private void irPantallaCapitulos() {
-        Intent intent = new Intent(this, CapitulosActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
+
     /*********************************************************************************************
      *                   Clase para la obtención de datos de la serie
      *********************************************************************************************/
@@ -295,11 +203,11 @@ public class buscarActivity extends AppCompatActivity {
                 final StringBuilder output = new StringBuilder("");
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-               // String jsonString="";
+                // String jsonString="";
 
 
                 String line = "";
-               // StringBuilder responseOutput = new StringBuilder();
+                // StringBuilder responseOutput = new StringBuilder();
                 System.out.println("output===============" + br);
                 while((line = br.readLine()) != null ) {
                     // responseOutput.append(line);
@@ -313,7 +221,7 @@ public class buscarActivity extends AppCompatActivity {
                     //String name;
                    /* TextView nombre = (TextView) findViewById(R.id.nombreSerie);
                     nombre.setText("");*/
-                   //for (int i=0; i<jsonArray.length();i++){
+                    //for (int i=0; i<jsonArray.length();i++){
 
 
                     //Me faltan obtener los dias y el género pero son arreglos y no me deja obtener
@@ -330,7 +238,7 @@ public class buscarActivity extends AppCompatActivity {
                         JSONObject schedule = (JSONObject) show.get("schedule");
                         horario=schedule.optString("time").toString();
                         output.append("Horario: " + horario + "\n\n");
-                       // dias=schedule.optString("days");
+                        // dias=schedule.optString("days");
 
                         duracion=show.optString("runtime").toString();
                         output.append("Duración: " + duracion + "minutos"+ "\n\n");
@@ -344,9 +252,11 @@ public class buscarActivity extends AppCompatActivity {
 
                         JSONObject imagen = (JSONObject) show.get("image");
                         url_imagen = imagen.get("medium").toString();
+
+                        Log.i("URL IMAGEN VER ITEM", "URL: "+url_imagen);
                         //output.append(imagen.get("medium"));
                     }
-                        //obtener id serie
+                    //obtener id serie
 
                     //}
 
@@ -361,11 +271,11 @@ public class buscarActivity extends AppCompatActivity {
                 }
                 else{
                     //Muestro el contenido y hago visibles los botones de agregar a favoritos y ver capitulos
-                   // agregar_favoritos.setVisibility(View.VISIBLE);
+                    // agregar_favoritos.setVisibility(View.VISIBLE);
                 }
 
                 //output.append(jsonString.toString());
-                buscarActivity.this.runOnUiThread(new Runnable() {
+                verItemSerieActivity.this.runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
@@ -392,7 +302,7 @@ public class buscarActivity extends AppCompatActivity {
 
         private void cargar_imagen(String url){
             if(url!=null){
-                CargaImagenes nuevaTarea = new CargaImagenes();
+                verItemSerieActivity.CargaImagenes nuevaTarea = new verItemSerieActivity.CargaImagenes();
                 nuevaTarea.execute(url);}
             else {
                 String msj="La imagen no ha sido cargada";
@@ -418,7 +328,7 @@ public class buscarActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             super.onPreExecute();
 
-            pDialog = new ProgressDialog(buscarActivity.this);
+            pDialog = new ProgressDialog(verItemSerieActivity.this);
             pDialog.setMessage("Cargando Imagen");
             pDialog.setCancelable(true);
             pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -461,9 +371,4 @@ public class buscarActivity extends AppCompatActivity {
 
     }
 
-
-    }
-
-
-
-
+}

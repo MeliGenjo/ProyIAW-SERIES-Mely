@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -54,6 +55,28 @@ public class MostrarSeriesActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_item);
         adapter=new Adapter(this,array);
         listView.setAdapter(adapter);
+
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                //Object o = listView.getItemAtPosition(position);
+                // Realiza lo que deseas, al recibir clic en el elemento de tu listView determinado por su posicion.
+                Log.i("Click", "click en el elemento " + position + " de mi ListView");
+
+                Item selItem = (Item) adapter.getItem(position);
+                Log.i("TITULO", "titulo del elemento " + selItem.getTitle() + " de mi ListView");
+                // Starting new intent
+                Intent intent = new Intent(getApplicationContext(), verItemSerieActivity.class);
+                intent.putExtra("titulo",selItem.getTitle());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+
+            }
+        });
 
         dialog=new ProgressDialog(this);
         dialog.setMessage("Cargando Series...");
@@ -311,6 +334,17 @@ public class MostrarSeriesActivity extends AppCompatActivity {
             case R.id.sortGenero:
                 Toast.makeText(this, "Series ordenadas por Genero", Toast.LENGTH_SHORT).show();
                 sortByGenero();
+                adapter.notifyDataSetChanged();
+                listView.setSelection(0);
+                return true;
+
+
+            case R.id.buscarSerie:
+                Toast.makeText(this, "Busco una serie", Toast.LENGTH_SHORT).show();
+                //sortByTitle();
+                Intent intent = new Intent(getApplicationContext(), buscarActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 adapter.notifyDataSetChanged();
                 listView.setSelection(0);
                 return true;
