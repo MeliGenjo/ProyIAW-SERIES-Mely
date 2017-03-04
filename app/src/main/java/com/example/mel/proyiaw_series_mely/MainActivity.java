@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private  ImageView fotoPerfil;
     private  TextView txt;
     private Button btnBuscar;
-    private Button btnAgenda, verSeries;
+    private Button btnAgenda, verSeries, btnRecomendaciones,btnVerFavoritas;
     private String nameUser;
     private Uri img;
    // private envioNotificaciones controlNot= new envioNotificaciones();
@@ -39,6 +40,24 @@ public class MainActivity extends AppCompatActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setearDatosUsuarios();
+
+
+
+        btnRecomendaciones = (Button) findViewById(R.id.btnRecomendaciones);
+        btnRecomendaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irPantallaRecomendaciones();
+            }
+        });
+
+        btnVerFavoritas = (Button) findViewById(R.id.btnVerFavoritas);
+        btnVerFavoritas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irPantallaVerSeriesFavoritas();
+            }
+        });
 
         verSeries = (Button) findViewById(R.id.verSeries);
         verSeries.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +90,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void irPantallaVerSeriesFavoritas() {
+        Intent intent = new Intent(this, MostrarFavoritasActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+
     private void irPantallaVerSeries() {
         Intent intent = new Intent(this, MostrarSeriesActivity.class);
         Toast.makeText(getApplicationContext(), "Ir a ver series ", Toast.LENGTH_SHORT).show();
@@ -86,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         txt = (TextView) findViewById(R.id.textHola);
 
         Profile profile = Profile.getCurrentProfile();
+
         if (profile!=null) {
             nameUser = profile.getName();
             img = profile.getProfilePictureUri(150, 150);
@@ -96,6 +123,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void irPantallaRecomendaciones() {
+        Intent intent = new Intent(this, RecomendacionesActivity.class);
+        Toast.makeText(getApplicationContext(), "Obtener recomendaciones ", Toast.LENGTH_SHORT).show();
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
                 irPantallaUsuarios();
                 return true;
 
+            case R.id.itemFavoritos:
+                irPantallaFavoritos();
+                return true;
+
             case R.id.itemLogout:
                 Toast.makeText(MainActivity.this, "Te esperamos pronto!!", Toast.LENGTH_SHORT).show();
                 logout();
@@ -139,6 +176,12 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void irPantallaFavoritos() {
+        Intent intent = new Intent(this, FavoritosActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void irPantallaSeries() {

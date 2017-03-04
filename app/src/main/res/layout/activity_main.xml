@@ -20,19 +20,6 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bienvenido =)"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="38dp"
-        android:textSize="18sp"
-        android:layout_alignRight="@+id/textHola"
-        android:layout_alignEnd="@+id/textHola" />
-
-    <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,8 +30,7 @@
         android:capitalize="words"
         android:textSize="24sp"
         android:textStyle="normal|bold"
-        android:layout_alignRight="@+id/button2"
-        android:layout_alignEnd="@+id/button2" />
+     />
 
     <TextView
         android:text="Qué deseas hacer?"
@@ -64,32 +50,33 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="11dp"
-        android:id="@+id/button2" />
+        android:id="@+id/btnVerFavoritas" />
+
+    <Button
+        android:text="ver agenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/verAgenda"
+        android:layout_below="@+id/verSeries"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="13dp" />
 
     <Button
         android:text="Buscar series"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnBuscar"
-        android:layout_below="@+id/button2"
+        android:layout_below="@+id/verAgenda"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="ver agenda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/verAgenda" />
 
     <Button
         android:text="Obtener recomendaciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
-        android:layout_below="@+id/btnBuscar"
+        android:id="@+id/btnRecomendaciones"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -97,10 +84,21 @@
         android:text="Ver Series"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/verAgenda"
+        android:id="@+id/verSeries"
+        android:layout_below="@+id/btnRecomendaciones"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido =)"
+        android:id="@+id/textView2"
+        android:textSize="18sp"
+        android:layout_above="@+id/textView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/verSeries" />
+        android:layout_marginBottom="19dp" />
 
 
 </RelativeLayout>

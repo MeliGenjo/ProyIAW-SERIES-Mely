@@ -24,7 +24,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table usuario (id integer primary key autoincrement, idFace integer, nombreApellido text, tema text)");
-        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie text,idUsuario integer)");
+        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie text,idUsuario text)");
         db.execSQL("create table serie_capitulo (id integer primary key autoincrement, idSerie text,idCapitulo text)");
     }
 
@@ -35,7 +35,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists usuario");
         db.execSQL("create table usuario (id integer primary key autoincrement, idFace integer, nombreApellido text, tema text);");
         db.execSQL("drop table if exists usuario_serie");
-        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie text,idUsuario integer);");
+        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie text,idUsuario text);");
         db.execSQL("drop table if exists serie_capitulo");
         db.execSQL("create table serie_capitulo (id integer primary key autoincrement, idSerie text,idCapitulo text);");
 
@@ -64,13 +64,10 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
 
     public String altaUsuario(String idF, String nom) {
 
-
         SQLiteDatabase bd = this.getWritableDatabase();
         String msj;
-
         //primero lo busco en la BD
         Cursor fila = bd.rawQuery("select id,nombreApellido,tema  from usuario where idFace=" + idF, null); //devuelve 0 o 1 fila
-
         if (fila.moveToFirst()) {  //si devolvió 1 fila, vamos al primero (que es el unico)
             //ya esta registrado en la BD
             msj = "Bievenido nuevamente :)";
@@ -92,19 +89,19 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
         return msj;
     }
 
-    public ArrayList<Integer> obtenerSeries(String usuario) {
-        ArrayList<Integer> listaSeries = new ArrayList<>();
-
+    public ArrayList<String> obtenerSeries(String usuario) {
+        ArrayList<String> listaSeries = new ArrayList<>();
         SQLiteDatabase bd = this.getWritableDatabase();
-        String q = "SELECT idSerie FROM usuario_serie where idUsuario="+usuario;
+        String q = "select idSerie from usuario_serie where idUsuario="+usuario;
         Cursor registros = bd.rawQuery(q,null);
-        if (registros.moveToFirst()){
-            //copio todos los usuarios a la lista
-            do{
-                listaSeries.add(registros.getInt(1));
-            } while (registros.moveToNext());
+            if (registros.moveToFirst()) {
+                //Log.e("INFO ", registros.getColumnName(0));
+                //copio todos los usuarios a la lista
+                do {
+                    listaSeries.add(registros.getString(0));  ///// -------------- no entiendo por que en 0!! tendria que ser 1 pero no es asi :/ [mely]
 
-        }
+                } while (registros.moveToNext());
+            }
         return listaSeries;
     }
 

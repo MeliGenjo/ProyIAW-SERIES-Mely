@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
  * Created by tb_laota on 9/21/2015.
  */
 public class AppController extends Application {
+
     public static final String TAG= AppController.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;

@@ -95,6 +95,7 @@ public class buscarActivity extends AppCompatActivity {
                 Profile profile = Profile.getCurrentProfile();
                 if (profile != null) {
                     agregar_a_favoritos(profile.getId(), idSerie);
+                    Log.e("favorito",profile.getId()+" "+ idSerie);
                 }
             }
         });

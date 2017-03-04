@@ -64,7 +64,10 @@ App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         </service>
 
         <activity android:name=".AgendaActivity" />
-        <activity android:name=".MostrarSeriesActivity"></activity>
+        <activity android:name=".MostrarSeriesActivity" />
+        <activity android:name=".RecomendacionesActivity" />
+        <activity android:name=".MostrarFavoritasActivity" />
+        <activity android:name=".FavoritosActivity"></activity>
     </application>
 
 </manifest>

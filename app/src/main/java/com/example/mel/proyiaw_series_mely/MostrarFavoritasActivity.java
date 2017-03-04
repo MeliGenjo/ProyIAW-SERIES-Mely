@@ -2,19 +2,22 @@ package com.example.mel.proyiaw_series_mely;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.facebook.Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,60 +30,62 @@ import java.util.List;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class MostrarSeriesActivity extends AppCompatActivity {
+public class MostrarFavoritasActivity extends AppCompatActivity {
 
-    private int nroPag=0;
-    private String url = "http://api.tvmaze.com/shows?page="+nroPag;
+    private int IDserie;
+    private String url = "http://api.tvmaze.com/shows/"+ IDserie;
 
     private ProgressDialog dialog;
     private List<Item> array = new ArrayList<Item>();
     private ListView listView;
     private Adapter adapter;
-    private JsonArrayRequest jsonArrayRequest;
+    private JsonObjectRequest jsObjRequest;
+    private List<String> idSeriesFavoritas = new ArrayList<String>();
+    private List<String> urlFavoritos = new ArrayList<String>();
+    private TextView sinFavoritos;
 
     private Button bAction, bDrama, bHorror, bRomance, bAdventure, bFantasy, bThriller, bCrime;
-
-    private Button b1, b2,b3,b4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mostrar_series);
-
-        inicializarBotonGeneros();
-
-        inicializarBotonMostrarMas();
+        setContentView(R.layout.activity_mostrar_favoritas);
 
         listView = (ListView) findViewById(R.id.list_item);
         adapter=new Adapter(this,array);
         listView.setAdapter(adapter);
 
-        dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando Series...");
-        dialog.show();
+        /*dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando Series Favoritas...");
+        dialog.show();*/
 
-        inicializarLista();
-        AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
-        Log.e("SIZE", String.valueOf(array.size()));
-    }
+        Profile profile = Profile.getCurrentProfile();
+        AdminSQLiteOpenHelper sql= new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
 
-    private void inicializarBotonMostrarMas() {
+        if (profile != null) {
 
-        b1 = (Button) findViewById(R.id.btnMostrarMas);
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (nroPag<100)
-                    nroPag++;
-                url = "http://api.tvmaze.com/shows?page="+nroPag;
-                inicializarLista();
-                listView.setSelection(0);
+            idSeriesFavoritas = sql.obtenerSeries(profile.getId());
 
-                Toast.makeText(getApplicationContext(), "Cargando series pág "+nroPag, Toast.LENGTH_SHORT).show();
-                //  AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
+            if (idSeriesFavoritas.size()==0){
+                sinFavoritos = (TextView) findViewById(R.id.textView);
+                sinFavoritos.setText("Aún no tienes series favoritas");
             }
-        });
+            else {
+                inicializarBotonGeneros();
+
+                for (int i = 0; i < idSeriesFavoritas.size(); i++) {
+                    urlFavoritos.add("http://api.tvmaze.com/shows/" + idSeriesFavoritas.get(i));
+                }
+
+                Toast.makeText(getApplicationContext(), "CANT URL " + urlFavoritos.size(), Toast.LENGTH_SHORT).show();
+                inicializarLista(urlFavoritos);
+            }
+        }
+
+
+
     }
+
 
     private void inicializarBotonGeneros() {
 
@@ -160,21 +165,18 @@ public class MostrarSeriesActivity extends AppCompatActivity {
     }
 
 
-    private void inicializarLista(){
-        //Creat volley request obj
-        // Toast.makeText(MainActivity.this, url, Toast.LENGTH_SHORT).show();
-        jsonArrayRequest=new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                hideDialog();
-                //parsing json
-                for(int i=0;i<response.length();i++){
-                    try{
-                        JSONObject obj=response.getJSONObject(i);
-                        Item item=new Item();
+    private void inicializarLista(List<String> urlFavoritos){
 
+        for(int i=0; i<urlFavoritos.size();i++) {
+            jsObjRequest = new JsonObjectRequest(urlFavoritos.get(i), new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    //hideDialog();
+                    try {
+                        JSONObject obj = response;
+                        Item item = new Item();
                         item.setId(obj.getInt("id"));
-
                         item.setTitle(obj.getString("name"));
 
                         //image es un JSON, la url esta dentro de medium
@@ -188,35 +190,40 @@ public class MostrarSeriesActivity extends AppCompatActivity {
 
                         //premiered es una fecha tipo anio-mes-dia
                         String fecha = obj.getString("premiered");
-                        String [] datos = fecha.split("-");
+                        String[] datos = fecha.split("-");
                         int anio = Integer.parseInt(datos[0]);
                         item.setYear(anio);
 
                         //genre is json array
-                        JSONArray genreArray=obj.getJSONArray("genres");
-                        ArrayList<String> genre=new ArrayList<String>();
-                        for(int j=0;j<genreArray.length();j++){
+                        JSONArray genreArray = obj.getJSONArray("genres");
+                        ArrayList<String> genre = new ArrayList<String>();
+                        for (int j = 0; j < genreArray.length(); j++) {
                             genre.add((String) genreArray.get(j));
                         }
                         item.setGenre(genre);
 
                         //add to array
                         array.add(item);
+                        Log.e("Serie", "AGREGUE SERIE "+ item.getTitle());
 
 
-
-                    }catch(JSONException ex){
+                    } catch (JSONException ex) {
                         ex.printStackTrace();
                     }
-                }
-                adapter.notifyDataSetChanged();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
-        });
+                    adapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+
+            AppController.getmInstance().addToRequesQueue(jsObjRequest);
+            Log.e("URL",jsObjRequest.getUrl() );
+        }
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -266,7 +273,6 @@ public class MostrarSeriesActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
     private void irPantallaPrincipal(){
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
