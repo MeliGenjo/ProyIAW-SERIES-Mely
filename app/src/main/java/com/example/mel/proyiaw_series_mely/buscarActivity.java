@@ -187,7 +187,7 @@ public class buscarActivity extends AppCompatActivity {
          Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
     }
 
-    //CAMBIAR EL GET Y HACER QUE SOLO DEVUELVA EL JSON!!! DESPUES LO TRATO AFUERA DEL METODO
+
     private void buscarSerie(){
         serie_usuario=autocompletar.getText().toString();
 

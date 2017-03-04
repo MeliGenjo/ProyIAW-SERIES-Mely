@@ -10,4 +10,65 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.mel.proyiaw_series_mely.verItemSerieActivity">
 
+
+    <TextView
+        android:text="Titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/titulo"
+        android:textSize="20dp"/>
+
+    <Button
+        android:text="Ver capítulos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/agregarFav"
+        android:id="@+id/verCap"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/titulo"
+        android:layout_toEndOf="@+id/titulo" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/verCap"
+        android:layout_marginTop="13dp"
+        android:layout_alignRight="@+id/verCap"
+        android:layout_alignEnd="@+id/verCap">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/image"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/contenido" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:text="Agregar a favoritos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:id="@+id/agregarFav"
+        android:layout_below="@+id/titulo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/titulo"
+        android:layout_toStartOf="@+id/titulo" />
+
 </RelativeLayout>
