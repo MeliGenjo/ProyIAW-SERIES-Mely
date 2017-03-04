@@ -34,7 +34,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class verItemSerieActivity extends AppCompatActivity {
 
     private String titulo;
-    private String url_imagen;
+
     private String sitio;
     private String genero;
     private String idSerie;
@@ -61,6 +61,12 @@ public class verItemSerieActivity extends AppCompatActivity {
         imagen_serie = (ImageView) findViewById(R.id.image);
 
         verCapitulos = (Button) findViewById(R.id.verCap);
+        verCapitulos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                irPantallaCapitulos();
+            }
+        });
 
         //Agrego una serie a favoritos
         agregar_favoritos= (Button) findViewById(R.id.agregarFav);
@@ -81,6 +87,13 @@ public class verItemSerieActivity extends AppCompatActivity {
 
     private void irPantallaPrincipal(){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    /* pantalla de capitulos favoritos*/
+    private void irPantallaCapitulos() {
+        Intent intent = new Intent(this, CapitulosActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -239,6 +252,8 @@ public class verItemSerieActivity extends AppCompatActivity {
 
                         JSONObject imagen = (JSONObject) show.get("image");
                         url_imagen = imagen.get("medium").toString();
+
+                        Log.i("URL IMAGEN VER ITEM", "URL: "+url_imagen);
                         //output.append(imagen.get("medium"));
                     }
                     //obtener id serie

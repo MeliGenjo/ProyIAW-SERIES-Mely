@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,7 +58,7 @@ public class buscarActivity extends AppCompatActivity {
     private TextView nombre_serie;
     private ImageView imagen_serie;
     private ProgressDialog progress;
-    private String url_imagen_serie;
+
 
     //Autocomplete
     private List<String> arreglo_nombres = new ArrayList<String>();
@@ -374,7 +373,7 @@ public class buscarActivity extends AppCompatActivity {
                         datosSerie.setText(output);
                         nombre.setText(nombre_string);
                         progress.dismiss();
-                        url_imagen_serie=url_imagen;
+                        //url_imagen_serie=url_imagen;
                         cargar_imagen(url_imagen);
                     }
                 });
