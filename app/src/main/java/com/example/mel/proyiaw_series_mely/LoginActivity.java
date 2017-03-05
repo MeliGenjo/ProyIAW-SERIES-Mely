@@ -13,6 +13,9 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.facebook.FacebookCallback;
@@ -57,9 +60,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             // si el inicio de sesion es correcto
             public void onSuccess(LoginResult loginResult) {
-
-                Toast.makeText(getApplicationContext(), "SESION INICIADA :)", Toast.LENGTH_SHORT).show();
-
                 BD = new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
                 AccessToken accessToken = loginResult.getAccessToken();
                 Profile profile = Profile.getCurrentProfile();
@@ -124,6 +124,38 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_login, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId() ){
+
+            case R.id.itemCerrarApp:
+                Toast.makeText(LoginActivity.this, "Hasta luego!", Toast.LENGTH_SHORT).show();
+                finish();
+                return true;
+
+            case R.id.itemAbout:
+                irPantallaAbout();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void irPantallaAbout() {
+        Intent intent = new Intent(this, AboutActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 

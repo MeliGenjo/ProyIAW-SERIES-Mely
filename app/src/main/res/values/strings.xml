@@ -9,5 +9,8 @@
     <string name="action_settings">Settings</string>
     <string name="test">Test text string</string>
     <string name="fb_login_protocol_scheme">fb557918394379082</string>
+    <string name="descripcion1">SeriesApp permite al usuario loguearse mediante Facebook y poder acceder a un listado de series provisto por el servicio TV-MAZE.</string>
+    <string name="descripcion2">Una vez logueado, el usuario podrá administrar sus series favoritas y buscar contenido al respecto.</string>
+    <string name="descripcion3">Además podrá administrar capítulos vistos de cada serie o acceder a una agenda que muestre próximos capítulos a estrenar.</string>
 
 </resources>

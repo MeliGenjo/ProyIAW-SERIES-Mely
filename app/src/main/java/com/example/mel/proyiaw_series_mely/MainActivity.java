@@ -161,32 +161,25 @@ public class MainActivity extends AppCompatActivity {
                 irPantallaCompartir();
                 return true;
 
-            case R.id.itemUsuarios:
-                irPantallaUsuarios();
-                return true;
-
-            case R.id.itemFavoritos:
-                irPantallaFavoritos();
-                return true;
 
             case R.id.itemLogout:
                 Toast.makeText(MainActivity.this, "Te esperamos pronto!!", Toast.LENGTH_SHORT).show();
                 logout();
                 return true;
 
-            case R.id.itemSeries:
-                irPantallaSeries();
-                return true;
 
-            case R.id.itemCerrarApp:
-                Toast.makeText(MainActivity.this, "Hasta luego!", Toast.LENGTH_SHORT).show();
-                finish();
-                return true;
+
 
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void irPantallaAbout() {
+        Intent intent = new Intent(this, AboutActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void irPantallaFavoritos() {

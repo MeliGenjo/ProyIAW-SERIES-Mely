@@ -12,25 +12,6 @@
         />
 
     <item
-        android:id="@+id/itemUsuarios"
-        android:title="Usuarios"
-        />
-
-    <item
-        android:id="@+id/itemFavoritos"
-        android:title="Favoritos"
-        />
-    <item
-        android:id="@+id/itemSeries"
-        android:title="Ver Series"
-        />
-
-    <item
-        android:id="@+id/itemCerrarApp"
-        android:title="Cerrar"
-        />
-
-    <item
         android:id="@+id/itemLogout"
         android:title="Logout"
         />

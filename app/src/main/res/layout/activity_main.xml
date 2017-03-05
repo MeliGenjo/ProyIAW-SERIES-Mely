@@ -43,33 +43,32 @@
         android:layout_alignParentStart="true" />
 
     <Button
+        android:id="@+id/btnBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnRecomendaciones"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:text="Buscar series" />
+
+    <Button
         android:text="Ver Series Favoritas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp"
-        android:id="@+id/btnVerFavoritas" />
-
-    <Button
-        android:text="ver agenda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/verAgenda"
-        android:layout_below="@+id/verSeries"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="13dp" />
-
-    <Button
-        android:text="Buscar series"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnBuscar"
+        android:id="@+id/btnVerFavoritas"
         android:layout_below="@+id/verAgenda"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/verAgenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/verSeries"
+        android:layout_marginTop="13dp"
+        android:text="Capítulos estreno" />
 
     <Button
         android:text="Obtener recomendaciones"
