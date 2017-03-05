@@ -49,12 +49,15 @@ public class verItemSerieActivity extends AppCompatActivity {
     private Button verCapitulos;
     private ProgressDialog progress;
 
+    private String es_favorita; // true = es favorita false=no es
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_item_serie);
 
         titulo = getIntent().getStringExtra("titulo");
+        es_favorita = getIntent().getStringExtra("esfavorita");
         nombre_serie= (TextView) findViewById(R.id.titulo);
         nombre_serie.setText(titulo);
 
@@ -81,6 +84,13 @@ public class verItemSerieActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Log.i("Es favorita"," "+es_favorita);
+       if(es_favorita.equals("true")){
+           Log.i("Es favorita"," ENTREEE");
+            agregar_favoritos.setVisibility(View.GONE);
+        }
+
 
         eliminar_favoritos= (Button) findViewById(R.id.agregarFav);
         eliminar_favoritos.setOnClickListener(new View.OnClickListener() {

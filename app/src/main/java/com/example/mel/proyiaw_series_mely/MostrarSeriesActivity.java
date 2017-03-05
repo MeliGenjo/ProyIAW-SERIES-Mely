@@ -71,6 +71,7 @@ public class MostrarSeriesActivity extends AppCompatActivity {
                 // Starting new intent
                 Intent intent = new Intent(getApplicationContext(), verItemSerieActivity.class);
                 intent.putExtra("titulo",selItem.getTitle());
+                intent.putExtra("esfavorita","false");
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 

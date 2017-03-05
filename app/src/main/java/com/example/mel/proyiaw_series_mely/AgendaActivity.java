@@ -2,6 +2,7 @@ package com.example.mel.proyiaw_series_mely;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +37,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class AgendaActivity extends AppCompatActivity {
 
     private TextView titulo;
@@ -42,10 +48,10 @@ public class AgendaActivity extends AppCompatActivity {
     private int year;
     private ProgressDialog progress;
     private ImageView imagen_capitulo;
+    private ProgressDialog dialog;
+    private List<Item> array = new ArrayList<Item>();
     private ListView listView;
     private Adapter adapter;
-    private List<Item> array = new ArrayList<Item>();
-    private JsonObjectRequest jsObjRequest;
 
     String respuesta="";
 
@@ -70,10 +76,36 @@ public class AgendaActivity extends AppCompatActivity {
         adapter=new Adapter(this,array);
         listView.setAdapter(adapter);
 
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                //Object o = listView.getItemAtPosition(position);
+                // Realiza lo que deseas, al recibir clic en el elemento de tu listView determinado por su posicion.
+                Log.i("Click", "click en el elemento " + position + " de mi ListView");
+
+              /*  Item selItem = (Item) adapter.getItem(position);
+                Log.i("TITULO", "titulo del elemento " + selItem.getTitle() + " de mi ListView");
+                // Starting new intent
+                Intent intent = new Intent(getApplicationContext(), verItemSerieActivity.class);
+                intent.putExtra("titulo",selItem.getTitle());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);*/
+
+
+            }
+        });
+
         //Obtengo los episodios a estrenar o recientemente estrenados.
 
         List<String> id_series_favoritas= obtener_id_series_favoritas();
         obtener_estrenos(id_series_favoritas);
+
+        /*dialog=new ProgressDialog(this);
+        dialog.setMessage("Cargando estrenos...");
+        dialog.show();*/
     }
 
     private List<String> obtener_id_series_favoritas() {
@@ -151,21 +183,33 @@ public class AgendaActivity extends AppCompatActivity {
                 try {
                     // Parsing json array response
                     // loop through each json object
-                    respuesta = "";
+                    //respuesta = "";
                     for (int i = 0; i < response.length(); i++) {
 
                         JSONObject objeto = (JSONObject) response.get(i);
+                        Item item=new Item();
 
                         String name = objeto.getString("name");
+                        item.setTitle(name);
+
+                        JSONObject imagen = objeto.getJSONObject("image");
+                        item.setImage(imagen.getString("medium"));
+
+                        ArrayList<String> a = new ArrayList<String>();
+                        item.setGenre(a);
+                        item.setId(1);
+                        item.setRate(0);
+                        item.setYear(0);
+
+                        //respuesta += "Name: " + name + "\n\n";
 
 
-
-                        respuesta += "Name: " + name + "\n\n";
-
+                        //add to array
+                        array.add(item);
 
                     }
 
-                    titulo.setText(respuesta);
+                   // titulo.setText(respuesta);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,6 +54,29 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.list_item);
         adapter=new Adapter(this,array);
         listView.setAdapter(adapter);
+
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                //Object o = listView.getItemAtPosition(position);
+                // Realiza lo que deseas, al recibir clic en el elemento de tu listView determinado por su posicion.
+                Log.i("Click", "click en el elemento " + position + " de mi ListView");
+
+                Item selItem = (Item) adapter.getItem(position);
+                Log.i("TITULO", "titulo del elemento " + selItem.getTitle() + " de mi ListView");
+                // Starting new intent
+                Intent intent = new Intent(getApplicationContext(), verItemSerieActivity.class);
+                intent.putExtra("titulo",selItem.getTitle());
+                intent.putExtra("esfavorita","true");
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+
+            }
+        });
 
         Profile profile = Profile.getCurrentProfile();
         AdminSQLiteOpenHelper sql= new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
