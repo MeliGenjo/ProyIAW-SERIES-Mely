@@ -130,6 +130,7 @@ public class buscarActivity extends AppCompatActivity {
 
         for(int i=0; i<100;i++) {
             url = "http://api.tvmaze.com/shows?page="+i;
+            Log.i("ARREGLO NOMBRES", "Página: "+i);
             inicializarListaNombres(url);
         }
 
@@ -139,6 +140,7 @@ public class buscarActivity extends AppCompatActivity {
     }
 
     private void inicializarListaNombres(String url){
+        Log.i("ARREGLO NOMBRES", "Inicializo lista");
 
         jsonArrayRequest=new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
@@ -162,7 +164,11 @@ public class buscarActivity extends AppCompatActivity {
 
             }
         });
+       /* AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
+        Log.e("URL",jsonArrayRequest.getUrl() );
 
+        //fALTA el notify y decirle al adapter que cambio
+        adapter.notifyDataSetChanged();*/
 
     }
 
