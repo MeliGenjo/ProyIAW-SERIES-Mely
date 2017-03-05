@@ -339,7 +339,6 @@ public class MostrarSeriesActivity extends AppCompatActivity {
                 listView.setSelection(0);
                 return true;
 
-
             case R.id.buscarSerie:
                 Toast.makeText(this, "Busco una serie", Toast.LENGTH_SHORT).show();
                 //sortByTitle();
@@ -349,8 +348,6 @@ public class MostrarSeriesActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 listView.setSelection(0);
                 return true;
-
-
 
             default:
                 return super.onOptionsItemSelected(item);

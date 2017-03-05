@@ -42,51 +42,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:id="@+id/btnBuscar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnRecomendaciones"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Buscar series" />
-
-    <Button
-        android:text="Ver Series Favoritas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnVerFavoritas"
-        android:layout_below="@+id/verAgenda"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/verAgenda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/verSeries"
-        android:layout_marginTop="13dp"
-        android:text="Capítulos estreno" />
-
-    <Button
-        android:text="Obtener recomendaciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnRecomendaciones"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Ver Series"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/verSeries"
-        android:layout_below="@+id/btnRecomendaciones"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -98,6 +53,59 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="19dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="53dp">
+
+        <Button
+            android:id="@+id/verSeries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnRecomendaciones"
+            android:layout_alignEnd="@+id/textHola"
+            android:layout_alignRight="@+id/textHola"
+            android:layout_marginBottom="28dp"
+            android:layout_weight="1"
+            android:text="Ver Series" />
+
+        <Button
+            android:id="@+id/btnVerFavoritas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/verAgenda"
+            android:layout_weight="1"
+            android:text="Ver Series Favoritas" />
+
+        <Button
+            android:id="@+id/btnRecomendaciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="55dp"
+            android:layout_weight="1"
+            android:text="Obtener recomendaciones" />
+
+        <Button
+            android:id="@+id/verAgenda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/verSeries"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:text="Capítulos estreno" />
+    </LinearLayout>
 
 
 </RelativeLayout>

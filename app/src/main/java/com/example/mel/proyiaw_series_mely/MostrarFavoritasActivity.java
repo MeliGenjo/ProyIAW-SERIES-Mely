@@ -304,6 +304,14 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
                 irPantallaPrincipal();
                 return true;
 
+            case R.id.buscarSerie:
+                Intent intent = new Intent(getApplicationContext(), buscarActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                adapter.notifyDataSetChanged();
+                listView.setSelection(0);
+                return true;
+
             case R.id.sortNombre:
                 Toast.makeText(this, "Series ordenadas por nombre", Toast.LENGTH_SHORT).show();
                 sortByTitle();

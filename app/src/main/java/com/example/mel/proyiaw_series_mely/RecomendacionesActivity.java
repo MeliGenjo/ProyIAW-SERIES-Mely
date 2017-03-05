@@ -45,7 +45,7 @@ public class RecomendacionesActivity extends AppCompatActivity {
     private TextView sinFavoritos;
 
     private Button bAction, bDrama, bHorror, bRomance, bAdventure, bFantasy, bThriller, bCrime;
-    private Button home;
+
 
     private JsonArrayRequest jsonArrayRequest;
 
@@ -59,13 +59,6 @@ public class RecomendacionesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recomendaciones);
 
-        home = (Button) findViewById(R.id.btnHome);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                irPantallaPrincipal();
-            }
-        });
 
         listView = (ListView) findViewById(R.id.list_item);
         adapter=new Adapter(this,array);

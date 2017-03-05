@@ -4,12 +4,19 @@
 
     <item
         android:id="@+id/volverHome"
-        android:title="Home"
+        android:title=""
+        android:icon="@drawable/ic_home_black_24dp"
         android:orderInCategory="100"
-        app:showAsAction="never"
+        app:showAsAction="always"
         />
 
-
+    <item
+        android:id="@+id/buscarSerie"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title=""
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        />
 
     <item
         android:id="@+id/sortNombre"
@@ -32,17 +39,12 @@
         />
     <item
         android:id="@+id/sortGenero"
-        android:title="Ordenar por Genero"
+        android:title="Ordenar por Género"
         android:orderInCategory="100"
         app:showAsAction="never"
         />
 
-    <item
-        android:id="@+id/buscarSerie"
-        android:title="Buscar una serie"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        />
+
 
 
 </menu>

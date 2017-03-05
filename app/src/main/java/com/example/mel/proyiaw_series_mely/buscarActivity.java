@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -46,7 +48,6 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class buscarActivity extends AppCompatActivity {
 
 
-    private Button home;
     private Button buscar;
     private Button agregar_favoritos;
     private Button verCapitulos;
@@ -79,14 +80,6 @@ public class buscarActivity extends AppCompatActivity {
         serie_usuario="";
         //serie_ingresada= (EditText) findViewById(R.id.texto_ingresado);
 
-        //Boton para volver al home
-        home = (Button) findViewById(R.id.btnHome);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                irPantallaPrincipal();
-            }
-        });
 
         //Boton para buscar la serie
         buscar = (Button) findViewById(R.id.boton_buscar);
@@ -170,6 +163,26 @@ public class buscarActivity extends AppCompatActivity {
         //fALTA el notify y decirle al adapter que cambio
         adapter.notifyDataSetChanged();*/
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_buscar, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId() ) {
+
+            case R.id.volverHome:
+                irPantallaPrincipal();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     private void irPantallaPrincipal(){

@@ -249,10 +249,11 @@ public class AgendaActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_agenda, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId() ) {
 
@@ -260,11 +261,24 @@ public class AgendaActivity extends AppCompatActivity {
                 irPantallaPrincipal();
                 return true;
 
+
+            case R.id.buscarSerie:
+                Toast.makeText(this, "Busco una serie", Toast.LENGTH_SHORT).show();
+                //sortByTitle();
+                Intent intent = new Intent(getApplicationContext(), buscarActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                adapter.notifyDataSetChanged();
+                listView.setSelection(0);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
 
         }
     }
+
+
 
     private void irPantallaPrincipal(){
         Intent intent = new Intent(this, MainActivity.class);

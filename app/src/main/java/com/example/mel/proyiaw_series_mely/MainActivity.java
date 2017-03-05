@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "SERIES";
     private  ImageView fotoPerfil;
     private  TextView txt;
-    private Button btnBuscar;
+
     private Button btnAgenda, verSeries, btnRecomendaciones,btnVerFavoritas;
     private String nameUser;
     private Uri img;
@@ -72,13 +72,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnBuscar = (Button) findViewById(R.id.btnBuscar);
-        btnBuscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                irPantallaBuscar();
-            }
-        });
 
         btnAgenda= (Button) findViewById(R.id.verAgenda);
         btnAgenda.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     private void irPantallaRecomendaciones() {
         Intent intent = new Intent(this, RecomendacionesActivity.class);
         Toast.makeText(getApplicationContext(), "Obtener recomendaciones ", Toast.LENGTH_SHORT).show();
@@ -156,19 +147,10 @@ public class MainActivity extends AppCompatActivity {
                 irPantallaBuscar();
                 return true;
 
-            case R.id.itemCompartir:
-                Toast.makeText(MainActivity.this, "Compartir contenido", Toast.LENGTH_SHORT).show();
-                irPantallaCompartir();
-                return true;
-
-
             case R.id.itemLogout:
                 Toast.makeText(MainActivity.this, "Te esperamos pronto!!", Toast.LENGTH_SHORT).show();
                 logout();
                 return true;
-
-
-
 
             default:
                 return super.onOptionsItemSelected(item);
