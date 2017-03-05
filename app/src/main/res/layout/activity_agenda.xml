@@ -11,12 +11,21 @@
     tools:context="com.example.mel.proyiaw_series_mely.AgendaActivity">
 
     <TextView
-        android:text="TextView"
+        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Titulo"
-        android:layout_alignParentTop="true"
+        android:id="@+id/noHayCapitulos"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/Titulo"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/Titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="CAPITULOS ESTRENO" />
 
     <ListView
         android:id="@+id/list_item"
@@ -25,9 +34,9 @@
         android:dividerHeight="5dp"
         android:listSelector="@drawable/list_row_select"
 
-        android:layout_below="@+id/Titulo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp">
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/noHayCapitulos">
     </ListView>
 </RelativeLayout>
