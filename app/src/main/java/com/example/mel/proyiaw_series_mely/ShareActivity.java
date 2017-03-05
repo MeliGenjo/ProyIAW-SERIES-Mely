@@ -20,7 +20,7 @@ import com.facebook.share.widget.ShareDialog;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
+/*
 public class ShareActivity extends AppCompatActivity {
 
     private Button share, home;
@@ -97,3 +97,4 @@ public class ShareActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
+*/

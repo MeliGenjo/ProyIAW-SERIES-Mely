@@ -20,6 +20,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 /**
  * Created by Mel on 21 feb 2017.
  */
+/*
 public class UsuariosActivity extends AppCompatActivity {
 
     ArrayList <String> lista;
@@ -61,3 +62,4 @@ public class UsuariosActivity extends AppCompatActivity {
 
 
 }
+*/

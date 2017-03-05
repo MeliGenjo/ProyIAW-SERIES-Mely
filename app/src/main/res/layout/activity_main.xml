@@ -11,105 +11,124 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.mel.proyiaw_series_mely.MainActivity">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/textHola"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp"
+        android:layout_toLeftOf="@+id/imageView"
+        android:layout_toStartOf="@+id/imageView"
+        android:layout_weight="1.73"
         android:capitalize="words"
+        android:text="Hola          "
+        android:textAlignment="center"
         android:textSize="24sp"
-        android:textStyle="normal|bold"
-     />
+        android:textStyle="normal|bold" />
 
     <TextView
-        android:text="Qué deseas hacer?"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:textSize="18sp"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bienvenido =)"
         android:id="@+id/textView2"
-        android:textSize="18sp"
-        android:layout_above="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout7"
+        android:layout_alignEnd="@+id/linearLayout2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="19dp" />
+        android:layout_alignRight="@+id/linearLayout2"
+        android:layout_marginBottom="30dp"
+        android:text="Bienvenido =)"
+        android:textAlignment="center"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:orientation="vertical"
+        android:layout_alignBottom="@+id/imageView"
+        android:weightSum="1"
+        android:id="@+id/linearLayout7">
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+
+    <Button
+        android:id="@+id/verSeries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_view_headline_black_24dp"
+        android:text="Ver Series"
+        android:layout_above="@+id/btnVerFavoritas"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/btnVerFavoritas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_star_black_24dp"
+        android:text="Ver Series Favoritas"
+        android:layout_above="@+id/verAgenda"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="39dp" />
+
+    <Button
+        android:id="@+id/verAgenda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_assignment_black_24dp"
+        android:text="Capítulos estreno"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="19dp" />
+
+    <Button
+        android:id="@+id/btnRecomendaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="65dp"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_filter_vintage_black_24dp"
+        android:text="Recomendaciones"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_toLeftOf="@+id/imageView"
+        android:layout_toStartOf="@+id/imageView"
+        android:id="@+id/linearLayout2">
 
-        <Button
-            android:id="@+id/verSeries"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/btnRecomendaciones"
-            android:layout_alignEnd="@+id/textHola"
-            android:layout_alignRight="@+id/textHola"
-            android:layout_marginBottom="28dp"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_view_headline_black_24dp"
-            android:text="Ver Series" />
-
-        <Button
-            android:id="@+id/btnVerFavoritas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/verAgenda"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_star_black_24dp"
-            android:text="Ver Series Favoritas" />
-
-        <Button
-            android:id="@+id/btnRecomendaciones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="55dp"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_filter_vintage_black_24dp"
-            android:text="Recomendaciones" />
-
-        <Button
-            android:id="@+id/verAgenda"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/verSeries"
-            android:layout_marginTop="13dp"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_assignment_black_24dp"
-            android:text="Capítulos estreno" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/verSeries"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="25dp"
+        android:text="Qué deseas hacer?"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

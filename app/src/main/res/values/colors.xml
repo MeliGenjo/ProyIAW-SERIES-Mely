@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#A157E6</color>
 
-    <color name="click_start_color">#FF5722</color>
-    <color name="click_end_color">#FFEB3B</color>
-    <color name="click_end_color_bg">#FDF9E1</color>
-    <color name="click_start_color_bg">#FDF9E1</color>
+    <color name="click_start_color">#96A3F0</color>
+    <color name="click_end_color">#CAD0F8</color>
+    <color name="click_end_color_bg">#E8F8FB</color>
+    <color name="click_start_color_bg">#E8F8FB</color>
 
 </resources>

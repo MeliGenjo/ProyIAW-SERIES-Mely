@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
+/*
 public class FavoritosActivity extends AppCompatActivity {
 
     ArrayList<String> lista;
@@ -55,3 +55,4 @@ public class FavoritosActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
+*/
