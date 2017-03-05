@@ -110,13 +110,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
-       /* super.onActivityResult(requestCode, resultCode, data);
-        // if you don't add following block,
-        // your registered `FacebookCallback` won't be called
-       if (callbackManager.onActivityResult(requestCode, resultCode, data)) {
-            return;
-        }*/
     }
 
 
