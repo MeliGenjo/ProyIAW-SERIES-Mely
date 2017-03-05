@@ -12,11 +12,14 @@ import android.os.Bundle;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -40,19 +43,40 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+
         callbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
 
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+            private ProfileTracker mProfileTracker;
+
+            @Override
             // si el inicio de sesion es correcto
             public void onSuccess(LoginResult loginResult) {
+
+                Toast.makeText(getApplicationContext(), "SESION INICIADA :)", Toast.LENGTH_SHORT).show();
+
+                BD = new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
                 AccessToken accessToken = loginResult.getAccessToken();
                 Profile profile = Profile.getCurrentProfile();
-                BD = new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
 
-                if (profile!=null) { //si el profile no es nulo obtengo los datos de facebook para almacenar en la BD
+                if (profile==null) {
+                    //Toast.makeText(getApplicationContext(),"profile null", Toast.LENGTH_SHORT).show();
+                    ProfileTracker profileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                            stopTracking();
+                            Profile.setCurrentProfile(currentProfile);
+                            irPantallaPrincipal();
+                        }
+                    };
+                    profileTracker.startTracking();
+                }
+                else { //si el profile no es nulo obtengo los datos de facebook para almacenar en la BD
                     nameUser = profile.getName();
                     String idFaceBD = profile.getId();
                     img = profile.getProfilePictureUri(150,150); //obtengo la foto de perfil de FB
@@ -86,6 +110,13 @@ public class LoginActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
+       /* super.onActivityResult(requestCode, resultCode, data);
+        // if you don't add following block,
+        // your registered `FacebookCallback` won't be called
+       if (callbackManager.onActivityResult(requestCode, resultCode, data)) {
+            return;
+        }*/
     }
 
 
@@ -94,10 +125,13 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
     }
+
+
 }
