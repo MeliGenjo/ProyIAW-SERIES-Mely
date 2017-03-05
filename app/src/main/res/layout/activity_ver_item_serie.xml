@@ -54,6 +54,18 @@
                 android:layout_height="match_parent"
                 android:id="@+id/contenido" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/titulo_link"
+                android:text=""/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autoLink="web"
+                android:id="@+id/link" />
+
 
 
         </LinearLayout>

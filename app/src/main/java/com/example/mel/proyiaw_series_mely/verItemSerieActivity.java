@@ -23,6 +23,7 @@ import com.facebook.Profile;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,6 +47,8 @@ public class verItemSerieActivity extends AppCompatActivity {
 
     private TextView nombre_serie;
     private TextView contenido_serie;
+    private TextView titulo_link;
+    private TextView link_ver_serie;
     private ImageView imagen_serie;
     private Button agregar_favoritos;
     private Button eliminar_favoritos;
@@ -53,6 +56,7 @@ public class verItemSerieActivity extends AppCompatActivity {
     private ProgressDialog progress;
 
     private String es_favorita; // true = es favorita false=no es
+    private int hay_link; //200 hay 404 no hay
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +111,30 @@ public class verItemSerieActivity extends AppCompatActivity {
             }
         });
 
+        titulo_link = (TextView) findViewById(R.id.titulo_link);
+        link_ver_serie= (TextView) findViewById(R.id.link);
+
+
+        hay_link=404;
+
+        verificar_links();
+
         buscarSerie();
+    }
+
+    public void verificar_links(){
+
+        String tit=titulo.replace(" ","%20");
+        String url= "http://www.seriesblanco.com/search.php?q1="+tit;
+
+        sendGetValidacion(url);
+        if(hay_link==404) {
+            url = "http://www.verseriesynovelas.tv/archivos/h1/?s=" + tit;
+            sendGetValidacion(url);
+           /* if(hay_link==404){
+                titulo_link.setText("No hay links disponibles");
+            }*/
+        }
     }
 
     private void eliminar_lista_favoritos(String id, String idSerie) {
@@ -197,6 +224,11 @@ public class verItemSerieActivity extends AppCompatActivity {
     public void sendGetRequest(String sitio,TextView datosSerie,TextView nombre) {
 
         new GetClass(this,sitio,datosSerie,nombre).execute();
+    }
+
+    public void sendGetValidacion(String sitio) {
+
+        new GetClassValidacion(this,sitio).execute();
     }
 
 
@@ -443,5 +475,82 @@ public class verItemSerieActivity extends AppCompatActivity {
         }
 
     }
+
+    /*********************************************************************************************
+     *                   Clase para la validación de links para ver la serie
+     *********************************************************************************************/
+
+    private class GetClassValidacion extends AsyncTask<String, Void, Void> {
+        private final Context context;
+        private final String sitio;
+
+        public GetClassValidacion(Context c, String sitio){
+            this.context = c;
+            this.sitio=sitio;
+        }
+
+        protected void onPreExecute(){
+          //  progress= new ProgressDialog(this.context);
+          //  progress.setMessage("Buscando link");
+          //  progress.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            try {
+                URL url = new URL(sitio);
+
+                Log.i("RECIEN ENTRE","ENTRE RECIEN con este url "+sitio);
+
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                String urlParameters = "fizz=buzz";
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
+                connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
+
+                int responseCode = connection.getResponseCode();
+
+                System.out.println("\nSending 'POST' request to URL : " + url);
+                System.out.println("Post parameters : " + urlParameters);
+                System.out.println("Response Code : " + responseCode);
+
+                Log.i("RESPONSE CODE","CODE:"+responseCode);
+                if(responseCode != HttpURLConnection.HTTP_OK){
+                    hay_link=404;
+                }
+                else
+                    hay_link=200;
+
+                //output.append(jsonString.toString());
+                verItemSerieActivity.this.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        if(hay_link==200){
+                            link_ver_serie.setText(sitio);
+                            titulo_link.setText("Link para ver serie online");
+                        }
+                        else{
+                            Log.i("LINK","NO HAY LINK");
+                        }
+                    }
+                });
+
+
+            } catch (MalformedURLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+    }//GetClass
+
 
 }
