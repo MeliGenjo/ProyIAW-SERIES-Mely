@@ -1,10 +1,12 @@
 package com.example.mel.proyiaw_series_mely;
 
+
 import android.content.Intent;
 import android.net.Uri;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,18 +23,20 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
 
+
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "SERIES";
     private  ImageView fotoPerfil;
     private  TextView txt;
     private Button btnBuscar;
     private Button btnAgenda, verSeries, btnRecomendaciones,btnVerFavoritas;
     private String nameUser;
     private Uri img;
-   // private envioNotificaciones controlNot= new envioNotificaciones();
+    private envioNotificaciones notificaciones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setearDatosUsuarios();
+
 
 
 
@@ -93,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
     private void irPantallaVerSeriesFavoritas() {
         Intent intent = new Intent(this, MostrarFavoritasActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        Profile profile=Profile.getCurrentProfile();
+        notificaciones=new envioNotificaciones();
+        notificaciones.controlNotificaciones(this,profile.getId());
         startActivity(intent);
     }
 
@@ -106,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // permite setear la foto y el nombre del usuario
+
     private void setearDatosUsuarios() {
 
         fotoPerfil = (ImageView) findViewById(R.id.imageView);
@@ -119,9 +128,11 @@ public class MainActivity extends AppCompatActivity {
             String foto = img.toString();
             Picasso.with(getApplicationContext()).load(foto).into(fotoPerfil); //seteo la foto al imageView
             txt.setText("Hola " + nameUser + "!");
-           // controlNot.controlNotificaciones(profile.getId());
         }
     }
+
+
+
 
     private void irPantallaRecomendaciones() {
         Intent intent = new Intent(this, RecomendacionesActivity.class);
