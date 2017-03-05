@@ -45,6 +45,7 @@ public class verItemSerieActivity extends AppCompatActivity {
     private TextView contenido_serie;
     private ImageView imagen_serie;
     private Button agregar_favoritos;
+    private Button eliminar_favoritos;
     private Button verCapitulos;
     private ProgressDialog progress;
 
@@ -64,7 +65,7 @@ public class verItemSerieActivity extends AppCompatActivity {
         verCapitulos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                irPantallaCapitulos();
+                irPantallaCapitulos(idSerie);
             }
         });
 
@@ -81,7 +82,32 @@ public class verItemSerieActivity extends AppCompatActivity {
             }
         });
 
+        eliminar_favoritos= (Button) findViewById(R.id.agregarFav);
+        eliminar_favoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Profile profile = Profile.getCurrentProfile();
+                if (profile != null) {
+                    eliminar_lista_favoritos(profile.getId(), idSerie);
+                    Log.e("favorito",profile.getId()+" "+ idSerie);
+                }
+            }
+        });
+
         buscarSerie();
+    }
+
+    private void eliminar_lista_favoritos(String id, String idSerie) {
+        AdminSQLiteOpenHelper sql= new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
+
+        boolean guardarFav= sql.eliminarFavoritas(id,idSerie);
+        String msj;
+        if (guardarFav){
+            msj="La serie se elimino de sus favoritas con éxito";
+        }else{
+            msj="No se pudo eliminar su serie favorita ";
+        }
+        Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -92,11 +118,13 @@ public class verItemSerieActivity extends AppCompatActivity {
     }
 
     /* pantalla de capitulos favoritos*/
-    private void irPantallaCapitulos() {
+    private void irPantallaCapitulos(String idSerie) {
         Intent intent = new Intent(this, CapitulosActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("idserie",idSerie);
+        intent.putExtra("esFavorito",true);
         startActivity(intent);
-    }
+        }
 
     private void agregar_a_favoritos(String usuario, String  serie){
         AdminSQLiteOpenHelper sql= new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
