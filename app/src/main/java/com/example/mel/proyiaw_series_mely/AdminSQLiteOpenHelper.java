@@ -117,4 +117,72 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
             return true;
 
     }
+
+    public boolean eliminarFavoritas(String idUsuario,String idSerie){
+        SQLiteDatabase bd = this.getWritableDatabase();
+        try {
+            bd.execSQL("DELETE FROM usuario_serie WHERE idSerie=\""+idSerie+"\" and idUsuario = \""+idUsuario+"\"");
+        }catch(SQLiteException e){
+            String  error =e.getMessage();
+            Log.d(APP_TAG,error);
+            return false;
+        }
+        return true;
+
+    }
+
+    public boolean agregarCapitulo(String idSerie,String idCapitulo){
+        SQLiteDatabase bd = this.getWritableDatabase();
+        try {
+            bd.execSQL("INSERT INTO serie_capitulo(idSerie ,idCapitulo) values (\""+idSerie+"\","+idCapitulo+")");
+        }catch(SQLiteException e){
+            String  error =e.getMessage();
+            Log.d(APP_TAG,error);
+            return false;
+        }
+        return true;
+
+    }
+    public boolean eliminarCapitulo(String idSerie,String idCapitulo){
+        SQLiteDatabase bd = this.getWritableDatabase();
+        try {
+            bd.execSQL("DELETE FROM serie_capitulo WHERE idSerie=\""+idSerie+"\" AND idCapitulo="+idCapitulo+"");
+        }catch(SQLiteException e){
+            String  error =e.getMessage();
+            Log.d(APP_TAG,error);
+            return false;
+        }
+        return true;
+
+    }
+
+
+    public ArrayList<String> obtenerCapitulosVistos(String serie) {
+        ArrayList<String> listaCapitulos= new ArrayList<>();
+        SQLiteDatabase bd = this.getWritableDatabase();
+        String q = "select idCapitulo from serie_capitulo where idSerie="+serie;
+        Cursor registros = bd.rawQuery(q,null);
+        if (registros.moveToFirst()) {
+            //Log.e("INFO ", registros.getColumnName(0));
+            //copio todos los usuarios a la lista
+            do {
+                listaCapitulos.add(registros.getString(0));  ///// -------------- no entiendo por que en 0!! tendria que ser 1 pero no es asi :/ [mely]
+
+            } while (registros.moveToNext());
+        }
+        return listaCapitulos;
+    }
+
+    public boolean existeCapitulo(String serie,String capitulo) {
+        SQLiteDatabase bd = this.getWritableDatabase();
+        String q = "select idCapitulo from serie_capitulo where idSerie="+serie+" AND idCapitulo="+ capitulo;
+        Cursor registros = bd.rawQuery(q,null);
+
+        if (registros.moveToFirst()) {
+            //Log.e("INFO ", registros.getColumnName(0));
+            return true;
+              }
+        return false;
+    }
+
 }
