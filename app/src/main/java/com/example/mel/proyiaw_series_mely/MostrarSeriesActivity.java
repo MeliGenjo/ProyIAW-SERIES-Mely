@@ -41,7 +41,7 @@ public class MostrarSeriesActivity extends AppCompatActivity {
 
     private Button bAction, bDrama, bHorror, bRomance, bAdventure, bFantasy, bThriller, bCrime;
 
-    private Button b1, b2,b3,b4;
+    private Button b1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +83,6 @@ public class MostrarSeriesActivity extends AppCompatActivity {
         dialog.show();
 
         inicializarLista();
-        AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
         Log.e("SIZE", String.valueOf(array.size()));
     }
 
@@ -93,7 +92,7 @@ public class MostrarSeriesActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nroPag<100)
+                if (nroPag<104)
                     nroPag++;
                 url = "http://api.tvmaze.com/shows?page="+nroPag;
                 inicializarLista();
@@ -193,6 +192,7 @@ public class MostrarSeriesActivity extends AppCompatActivity {
                 //parsing json
                 for(int i=0;i<response.length();i++){
                     try{
+
                         JSONObject obj=response.getJSONObject(i);
                         Item item=new Item();
 
@@ -206,13 +206,20 @@ public class MostrarSeriesActivity extends AppCompatActivity {
 
                         //rating es un json, el puntaje esta dentro de average
                         JSONObject puntaje = obj.getJSONObject("rating");
-                        double ptj = puntaje.getDouble("average");
+                        String average = puntaje.getString("average");
+                        double ptj =0;
+                        if (!average.equals("null"))
+                             ptj = puntaje.getDouble("average");
                         item.setRate(ptj);
 
                         //premiered es una fecha tipo anio-mes-dia
                         String fecha = obj.getString("premiered");
-                        String [] datos = fecha.split("-");
-                        int anio = Integer.parseInt(datos[0]);
+                        int anio = 0;
+                        if (!fecha.equals("null")) {
+                            String[] datos = fecha.split("-");
+                            if (!datos[0].equals("null"))
+                                anio = Integer.parseInt(datos[0]);
+                        }
                         item.setYear(anio);
 
                         //genre is json array
@@ -226,10 +233,9 @@ public class MostrarSeriesActivity extends AppCompatActivity {
                         //add to array
                         array.add(item);
 
-
-
                     }catch(JSONException ex){
-                        ex.printStackTrace();
+                        //ex.printStackTrace();
+                        Log.e("JSON Error", "Error en JSONarray en i="+i+" con la URL: "+jsonArrayRequest.getUrl());
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -237,10 +243,10 @@ public class MostrarSeriesActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e("JSON Error","onErrorResponse de inicializarLista" );
             }
         });
-
+        AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
     }
 
     public void searchItem(String textToSearch){
