@@ -24,7 +24,7 @@
             android:authorities="com.facebook.app.FacebookContentProvider557918394379082"
             android:exported="true" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,12 +50,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-         <activity android:name=".buscarActivity" />
-        <activity android:name=".ShareActivity" />
-        <activity android:name=".UsuariosActivity" />
-        <activity android:name=".SeriesActivity" />
-        <activity android:name=".CapitulosActivity" />
+        <activity android:name=".LoginActivity" android:label="Login Series" />
+         <activity android:name=".buscarActivity" android:label="Buscar Serie" />
+        <!---activity android:name=".ShareActivity" /-->
+        <!---activity android:name=".UsuariosActivity" /-->
+        <activity android:name=".SeriesActivity"  />
+        <activity android:name=".CapitulosActivity" android:label="Capítulos" />
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
@@ -68,13 +68,13 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".AgendaActivity" />
-        <activity android:name=".MostrarSeriesActivity" />
-        <activity android:name=".RecomendacionesActivity" />
-        <activity android:name=".MostrarFavoritasActivity" />
-        <activity android:name=".FavoritosActivity" />
-        <activity android:name=".verItemSerieActivity" />
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AgendaActivity" android:label="Próximos Estrenos"/>
+        <activity android:name=".MostrarSeriesActivity" android:label="Series" />
+        <activity android:name=".RecomendacionesActivity" android:label="Series Recomendadas" />
+        <activity android:name=".MostrarFavoritasActivity" android:label="Series Favoritas"/>
+        <!---activity android:name=".FavoritosActivity" /-->
+        <activity android:name=".verItemSerieActivity" android:label="Serie" />
+        <activity android:name=".AboutActivity" android:label="About Us"> </activity>
     </application>
 
 </manifest>

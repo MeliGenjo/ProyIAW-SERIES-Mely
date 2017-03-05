@@ -8,7 +8,7 @@ import com.facebook.appevents.AppEventsLogger;
 /**
  * Created by Mel on 16 feb 2017.
  */
-
+/*
 public class SeriesApp extends Application {
 
     @Override
@@ -18,3 +18,4 @@ public class SeriesApp extends Application {
         AppEventsLogger.activateApp(this);
     }
 }
+*/

@@ -288,6 +288,7 @@ public class RecomendacionesActivity extends AppCompatActivity {
             jsonArrayRequest=new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
+                    hideDialog();
                     for(int i=0;i<response.length();i++){
                         try{
                             JSONObject obj=response.getJSONObject(i);
@@ -376,7 +377,7 @@ public class RecomendacionesActivity extends AppCompatActivity {
             AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
 
         }
-        hideDialog();
+
         adapter.notifyDataSetChanged();
     }
 

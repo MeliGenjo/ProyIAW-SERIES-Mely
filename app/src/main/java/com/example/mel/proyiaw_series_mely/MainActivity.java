@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setearDatosUsuarios();
 
-
-
-
         btnRecomendaciones = (Button) findViewById(R.id.btnRecomendaciones);
         btnRecomendaciones.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
 
         if (profile!=null) {
-            nameUser = profile.getName();
+            nameUser = profile.getFirstName();
             img = profile.getProfilePictureUri(150, 150);
             String foto = img.toString();
             Picasso.with(getApplicationContext()).load(foto).into(fotoPerfil); //seteo la foto al imageView
@@ -158,35 +155,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void irPantallaAbout() {
-        Intent intent = new Intent(this, AboutActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
 
-    private void irPantallaFavoritos() {
-        Intent intent = new Intent(this, FavoritosActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
 
-    private void irPantallaSeries() {
-        Intent intent = new Intent(this, SeriesActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-    private void irPantallaUsuarios() {
-        Intent intent = new Intent(this, UsuariosActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-    private void irPantallaCompartir() {
-        Intent intent = new Intent(this, ShareActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
 
     private void irPantallaBuscar() {
         Intent intent = new Intent(this, buscarActivity.class);
