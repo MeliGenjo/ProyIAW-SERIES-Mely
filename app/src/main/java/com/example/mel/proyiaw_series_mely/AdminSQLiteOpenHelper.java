@@ -24,8 +24,8 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table usuario (id integer primary key autoincrement, idFace integer, nombreApellido text, tema text)");
-        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie text,idUsuario text)");
-        db.execSQL("create table serie_capitulo (id integer primary key autoincrement, idSerie text,idCapitulo text)");
+        db.execSQL("create table usuario_serie (id integer primary key autoincrement, idSerie text,idUsuario text,  UNIQUE (idSerie, idUsuario) ON CONFLICT REPLACE)");
+        db.execSQL("create table serie_capitulo (id integer primary key autoincrement, idSerie text,idCapitulo text, UNIQUE (idSerie, idCapitulo) ON CONFLICT REPLACE ) ");
     }
 
     //Borrar las tablas y crear las nuevas tablas

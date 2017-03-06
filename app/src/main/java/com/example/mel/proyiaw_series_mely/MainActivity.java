@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MostrarFavoritasActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         Profile profile=Profile.getCurrentProfile();
-        notificaciones=new envioNotificaciones();
+        notificaciones = new envioNotificaciones();
         notificaciones.controlNotificaciones(this,profile.getId());
         startActivity(intent);
     }

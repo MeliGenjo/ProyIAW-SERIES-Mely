@@ -81,13 +81,25 @@ public class verItemSerieActivity extends AppCompatActivity {
 
         //Agrego una serie a favoritos
         agregar_favoritos= (Button) findViewById(R.id.agregarFav);
+        if (es_favorita.equals("true")){
+            agregar_favoritos.setText("Eliminar de Favoritas");
+        }else{
+            agregar_favoritos.setText("Agregar a Favoritas");
+        }
         agregar_favoritos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Profile profile = Profile.getCurrentProfile();
                 if (profile != null) {
-                    agregar_a_favoritos(profile.getId(), idSerie);
-                    Log.e("favorito",profile.getId()+" "+ idSerie);
+                    if (es_favorita.equals("true")) {
+                        eliminar_lista_favoritos(profile.getId(), idSerie);
+                        Log.e("favorito",profile.getId()+" "+ idSerie);
+
+                    }else{
+                        agregar_a_favoritos(profile.getId(), idSerie);
+                        Log.e("favorito",profile.getId()+" "+ idSerie);
+                    }
+
                 }
             }
         });
@@ -99,17 +111,6 @@ public class verItemSerieActivity extends AppCompatActivity {
         }
 
 
-        eliminar_favoritos= (Button) findViewById(R.id.agregarFav);
-        eliminar_favoritos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Profile profile = Profile.getCurrentProfile();
-                if (profile != null) {
-                    eliminar_lista_favoritos(profile.getId(), idSerie);
-                    Log.e("favorito",profile.getId()+" "+ idSerie);
-                }
-            }
-        });
 
         titulo_link = (TextView) findViewById(R.id.titulo_link);
         link_ver_serie= (TextView) findViewById(R.id.link);
