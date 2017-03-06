@@ -3,11 +3,14 @@ package com.example.mel.proyiaw_series_mely;
 
 import android.app.ProgressDialog;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -29,6 +32,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
 
@@ -42,7 +47,7 @@ public class CapitulosActivity extends AppCompatActivity {
 
     public static final String TAG = "CAPITULOS";
     public String[][] episodio;
-    public String idSerie;
+    public String idSerie, titulo;
     public int ultimaTemp;
     public ArrayList<String> lista = new ArrayList<String>();
     public LinearLayout episodios;
@@ -51,12 +56,24 @@ public class CapitulosActivity extends AppCompatActivity {
     private Boolean elegirFavoritos;
     private List<Item> array = new ArrayList<Item>();
     private JsonArrayRequest jsonArrayRequest; private ListView listView;
+    private String favorito;
+    private String vengoDe;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capitulos);
         idSerie = getIntent().getStringExtra("idserie");
-        elegirFavoritos= getIntent().getBooleanExtra("esFavorito",false);
+
+        titulo=getIntent().getStringExtra("titulo");
+        vengoDe= getIntent().getStringExtra("vengoDe");
+
+        favorito= getIntent().getStringExtra("esFavorito");
+        elegirFavoritos= favorito.equals("true");
+        if (favorito.equals("true"))
+            elegirFavoritos=true;
+        else
+            elegirFavoritos=false;
+
         episodios = (LinearLayout) findViewById(R.id.linearLayoutEpisodios);
         if (elegirFavoritos) {
             obtenerCapitulosVistos(idSerie);
@@ -128,7 +145,46 @@ public class CapitulosActivity extends AppCompatActivity {
        return BD.existeCapitulo(idSerie,codigo);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_buscar, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId() ) {
 
+            case R.id.volverHome:
+                irPantallaPrincipal();
+                return true;
+
+            case R.id.back:
+                retrocederPantalla();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    private void retrocederPantalla() {
+        Intent intent = new Intent(this, verItemSerieActivity.class);
+
+        intent.putExtra("titulo",titulo);
+        intent.putExtra("esfavorita",favorito);
+        intent.putExtra("vengoDe",vengoDe);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    private void irPantallaPrincipal(){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
     public void hideDialog(){
         if(dialog !=null){
             dialog.dismiss();

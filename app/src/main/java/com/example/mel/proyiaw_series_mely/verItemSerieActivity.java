@@ -55,6 +55,8 @@ public class verItemSerieActivity extends AppCompatActivity {
     private Button verCapitulos;
     private ProgressDialog progress;
 
+    private String vengoDe;
+
     private String es_favorita; // true = es favorita false=no es
     private int hay_link; //200 hay 404 no hay
 
@@ -65,6 +67,9 @@ public class verItemSerieActivity extends AppCompatActivity {
 
         titulo = getIntent().getStringExtra("titulo");
         es_favorita = getIntent().getStringExtra("esfavorita");
+
+        vengoDe= getIntent().getStringExtra("vengoDe");
+
         nombre_serie= (TextView) findViewById(R.id.titulo);
         nombre_serie.setText(titulo);
 
@@ -162,6 +167,10 @@ public class verItemSerieActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId() ){
 
+            case R.id.back:
+                retrocederPantalla();
+                return true;
+
             case R.id.share:
                 compartirSerie();
                 return true;
@@ -173,6 +182,29 @@ public class verItemSerieActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+    }
+
+    private void retrocederPantalla() {
+
+        if (vengoDe.equals("Recomendaciones")) {
+            Intent intent = new Intent(this, RecomendacionesActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
+        if (vengoDe.equals("verSeries")) {
+            Intent intent = new Intent(this, MostrarSeriesActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
+        if (vengoDe.equals("Favoritas")) {
+            Intent intent = new Intent(this, MostrarFavoritasActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+
 
     }
 
@@ -194,8 +226,13 @@ public class verItemSerieActivity extends AppCompatActivity {
     private void irPantallaCapitulos(String idSerie) {
         Intent intent = new Intent(this, CapitulosActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+
+        intent.putExtra("titulo",titulo);
         intent.putExtra("idserie",idSerie);
-        intent.putExtra("esFavorito",true);
+        intent.putExtra("esFavorito",es_favorita);
+        intent.putExtra("vengoDe",vengoDe);
+
+
         startActivity(intent);
         }
 

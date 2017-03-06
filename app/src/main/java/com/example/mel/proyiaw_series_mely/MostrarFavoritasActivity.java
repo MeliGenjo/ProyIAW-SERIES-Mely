@@ -71,9 +71,9 @@ public class MostrarFavoritasActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), verItemSerieActivity.class);
                 intent.putExtra("titulo",selItem.getTitle());
                 intent.putExtra("esfavorita","true");
+                intent.putExtra("vengoDe","Favoritas");
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-
 
             }
         });
