@@ -89,6 +89,7 @@ public class CapitulosActivity extends AppCompatActivity {
         jsonArrayRequest=new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
+                ArrayList<String> capitulosVistos= obtenerCapitulosVistos(idSerie);
                 Log.d(TAG,"======================================obtengo capitulos===================================");
                 hideDialog();
                 //parsing json
@@ -110,10 +111,16 @@ public class CapitulosActivity extends AppCompatActivity {
                         String nombre =  (String) obj.getString("name");
                         Integer episodioJ= (Integer) obj.getInt("number");
                         Integer temporada = (Integer) obj.getInt("season");
-                        boolean existe=existeCapitulo(idSerie,String.valueOf(codigo));
                         String visto;
-                        if (existe){
-                            visto="v";
+                        if (capitulosVistos.size()!=0){ //si es vacio, no vi ninguno
+                            boolean existe=existeCapitulo(capitulosVistos,String.valueOf(codigo));
+
+                            if (existe){
+                                visto="v";
+                                capitulosVistos.remove(String.valueOf(codigo));
+                            }else{
+                                visto="f";
+                            }
                         }else{
                             visto="f";
                         }
@@ -379,9 +386,20 @@ public class CapitulosActivity extends AppCompatActivity {
 
     }
 
-    private void obtenerCapitulosVistos(String idserie) {
+    private ArrayList<String> obtenerCapitulosVistos(String idSerie) {
         AdminSQLiteOpenHelper BD = new AdminSQLiteOpenHelper(getApplicationContext(), null, null, 1);
-        lista = BD.obtenerCapitulosVistos(idserie);
+        return BD.obtenerCapitulosVistos(idSerie); //ya existe el metodo
+    }
+
+    //===========================================================controla si existe en la lista el capitulo============================
+    private boolean existeCapitulo(ArrayList<String> listaCapV, String idCapitulo){
+        for (String idCapLista : listaCapV) {
+            if (idCapLista.equals(idCapitulo)){
+                return true;
+            }
+        }
+        return false;
+
 
     }
 
