@@ -66,6 +66,7 @@ public class buscarActivity extends AppCompatActivity {
     private ImageView imagen_serie;
     private ScrollView scroll;
     private ProgressDialog progress;
+    private  ArrayAdapter adapter;
 
 
     //Autocomplete
@@ -138,7 +139,7 @@ public class buscarActivity extends AppCompatActivity {
             inicializarListaNombres(url);
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.select_dialog_item,arreglo_nombres);
+        adapter = new ArrayAdapter(this,android.R.layout.select_dialog_item,arreglo_nombres);
         autocompletar.setThreshold(1);
         autocompletar.setAdapter(adapter);
     }
@@ -170,6 +171,7 @@ public class buscarActivity extends AppCompatActivity {
         });
         AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
     }
+
 
 
     @Override

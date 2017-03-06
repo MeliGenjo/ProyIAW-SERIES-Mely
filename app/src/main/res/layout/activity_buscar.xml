@@ -43,8 +43,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
-        android:id="@+id/scroll">
-        <!-- android:visibility="gone"-->
+        android:id="@+id/scroll"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,34 +56,50 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:textSize="21sp"
                 android:id="@+id/nombre_serie" />
 
-            <Button
-                android:id="@+id/verCapitulos"
-                android:layout_width="152dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignTop="@+id/agregarAFavoritos"
-                android:text="Ver Capítulos" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/agregarAFavoritos"
-                android:layout_width="152dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:text="Agregar a Favoritos" />
+                <Button
+                    android:id="@+id/verCapitulos"
+                    android:layout_width="152dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ver Capítulos"
 
-            <ImageView
-                android:id="@+id/imagen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/agregarAFavoritos"
-                android:layout_centerInParent="true"
-                />
+                    android:layout_alignTop="@+id/agregarAFavoritos"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <Button
+                    android:id="@+id/agregarAFavoritos"
+                    android:layout_width="152dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:text="Agregar a Favoritos"
+                    android:layout_marginTop="30dp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imagen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="5dp"
+                    />
+
+            </RelativeLayout>
+
+
 
 
             <TextView
@@ -99,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/contenidoSerie"
+                android:layout_marginTop="5dp"
                 android:layout_centerInParent="true"
                 android:layout_alignBottom="@+id/tituloContenido"/>
 
@@ -107,6 +124,7 @@
                 android:id="@+id/tituloHorario"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
                 android:layout_alignBottom="@+id/contenidoSerie"
                 android:layout_centerInParent="true"
                 android:text="Horario:"
@@ -116,7 +134,7 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="5dp"
                 android:layout_centerInParent="true"
                 android:layout_alignBottom="@+id/tituloHorario"
                 android:id="@+id/horario" />
@@ -127,6 +145,7 @@
                 android:id="@+id/tituloDuracion"
                 android:textSize="14dp"
                 android:text="Duracion:"
+                android:layout_marginTop="5dp"
                 android:layout_centerInParent="true"
                 android:layout_alignBottom="@+id/horario"/>
 
@@ -134,7 +153,7 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="5dp"
                 android:layout_centerInParent="true"
                 android:layout_alignBottom="@+id/tituloDuracion"
                 android:id="@+id/duracion" />
@@ -143,6 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/tituloPuntaje"
+                android:layout_marginTop="5dp"
                 android:textSize="14dp"
                 android:text="Puntaje:"
                 android:layout_centerInParent="true"
@@ -152,7 +172,7 @@
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="5dp"
                 android:layout_centerInParent="true"
                 android:layout_alignBottom="@+id/tituloPuntaje"
                 android:id="@+id/puntaje" />
