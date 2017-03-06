@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.facebook.Profile;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -57,7 +60,11 @@ public class buscarActivity extends AppCompatActivity {
    // private EditText serie_ingresada;
     private TextView contenido_serie;
     private TextView nombre_serie;
+    private TextView horario_serie;
+    private TextView duracion_serie;
+    private TextView puntaje_serie;
     private ImageView imagen_serie;
+    private ScrollView scroll;
     private ProgressDialog progress;
 
 
@@ -93,7 +100,11 @@ public class buscarActivity extends AppCompatActivity {
         //Contenido de la serie buscada
         contenido_serie= (TextView) findViewById(R.id.contenidoSerie);
         nombre_serie=(TextView) findViewById(R.id.nombre_serie);
+        horario_serie=(TextView) findViewById(R.id.horario);
+        duracion_serie = (TextView) findViewById(R.id.duracion);
+        puntaje_serie = (TextView) findViewById(R.id.puntaje);
         imagen_serie = (ImageView)findViewById(R.id.imagen);
+        scroll=(ScrollView) findViewById(R.id.scroll);
 
         //Agrego una serie a favoritos
         agregar_favoritos= (Button) findViewById(R.id.agregarAFavoritos);
@@ -212,8 +223,9 @@ public class buscarActivity extends AppCompatActivity {
             //Cargo el contenido de la serie
             //contenido_serie.setText(sitio);
             sendGetRequest(sitio,contenido_serie,nombre_serie);
-            agregar_favoritos.setVisibility(View.VISIBLE);
-            verCapitulos.setVisibility(View.VISIBLE);
+           /* agregar_favoritos.setVisibility(View.VISIBLE);
+            verCapitulos.setVisibility(View.VISIBLE);*/
+
 
         }
         else{
@@ -349,7 +361,7 @@ public class buscarActivity extends AppCompatActivity {
                         output.append("Horario: " + horario + "\n\n");
                        // dias=schedule.optString("days");
 
-                        duracion=show.optString("runtime").toString();
+                        duracion=show.optString("runtime").toString()+" minutos";
                         output.append("Duración: " + duracion + "minutos"+ "\n\n");
 
 
@@ -358,6 +370,9 @@ public class buscarActivity extends AppCompatActivity {
 
                         descripcion = show.optString("summary").toString();
                         output.append("Resumen: " + descripcion + "\n\n");
+
+                        JSONObject rat = (JSONObject) show.get("rating");
+                        puntaje = rat.optString("average").toString();
 
                         JSONObject imagen = (JSONObject) show.get("image");
                         url_imagen = imagen.get("medium").toString();
@@ -386,12 +401,25 @@ public class buscarActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        //datosSerie.setText(descripcion);
-                        datosSerie.setText(output);
+                        //datosSerie.setText(output);
+
+
+                        scroll.setVisibility(View.VISIBLE);
+
+                        datosSerie.setText(Html.fromHtml(descripcion));
                         nombre.setText(nombre_string);
+                        horario_serie.setText(horario);
+                        duracion_serie.setText(duracion);
+                        puntaje_serie.setText(puntaje);
                         progress.dismiss();
                         //url_imagen_serie=url_imagen;
                         cargar_imagen(url_imagen);
+                        if(control_de_favoritas(id_serie)){
+                            agregar_favoritos.setVisibility(View.GONE);
+                        }
+                        else
+                            agregar_favoritos.setVisibility(View.VISIBLE);
+
                     }
                 });
 
@@ -415,6 +443,25 @@ public class buscarActivity extends AppCompatActivity {
                 String msj="La imagen no ha sido cargada";
                 Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
             }
+        }
+
+        private boolean control_de_favoritas(String id_serie){
+            Profile profile = Profile.getCurrentProfile();
+            AdminSQLiteOpenHelper sql= new AdminSQLiteOpenHelper(getApplicationContext(),null, null, 1);
+            List<String> idSeriesFavoritas = new ArrayList<String>();
+            boolean encontre=false;
+            if (profile != null) {
+
+                idSeriesFavoritas = sql.obtenerSeries(profile.getId());
+                int i=0;
+                while(i<idSeriesFavoritas.size()&&!encontre){
+                  if(idSeriesFavoritas.get(i).equals(id_serie)){
+                            encontre=true;
+                  }
+                  i ++;
+                }
+            }
+            return encontre;
         }
 
 
