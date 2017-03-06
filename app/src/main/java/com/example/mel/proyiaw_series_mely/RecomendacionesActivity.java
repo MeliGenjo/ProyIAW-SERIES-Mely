@@ -303,7 +303,7 @@ public class RecomendacionesActivity extends AppCompatActivity {
     //busco otra serie que no tenga idSerie, que tenga puntaje > 9 y que tenga genero contenido en genre
     private void buscarOtraSerie(final int idSerie,  final ArrayList<String> genreSerie) {
 
-        for(int i=0; i<104;i++) { //recorro todas las paginas del webService
+        for(int i=0; i<19;i++) { //recorro todas las paginas del webService
 
             //genero la url de cada pagina
             String url = "http://api.tvmaze.com/shows?page="+i;
