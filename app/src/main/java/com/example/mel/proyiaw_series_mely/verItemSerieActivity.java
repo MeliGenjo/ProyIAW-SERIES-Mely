@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,6 +50,9 @@ public class verItemSerieActivity extends AppCompatActivity {
     private TextView contenido_serie;
     private TextView titulo_link;
     private TextView link_ver_serie;
+    private TextView tv_horario;
+    private TextView tv_duracion;
+    private TextView tv_puntaje;
     private ImageView imagen_serie;
     private Button agregar_favoritos;
     private Button eliminar_favoritos;
@@ -109,13 +113,14 @@ public class verItemSerieActivity extends AppCompatActivity {
             }
         });
 
-        Log.i("Es favorita"," "+es_favorita);
+
        if(es_favorita.equals("true")){
-           Log.i("Es favorita"," ENTREEE");
             agregar_favoritos.setVisibility(View.GONE);
         }
 
-
+        tv_horario=(TextView) findViewById(R.id.horario);
+        tv_duracion=(TextView) findViewById(R.id.duracion);
+        tv_puntaje=(TextView) findViewById(R.id.puntaje);
 
         titulo_link = (TextView) findViewById(R.id.titulo_link);
         link_ver_serie= (TextView) findViewById(R.id.link);
@@ -393,6 +398,9 @@ public class verItemSerieActivity extends AppCompatActivity {
                         descripcion = show.optString("summary").toString();
                         output.append("Resumen: " + descripcion + "\n\n");
 
+                        JSONObject rat = (JSONObject) show.get("rating");
+                        puntaje = rat.optString("average").toString();
+
                         JSONObject imagen = (JSONObject) show.get("image");
                         url_imagen = imagen.get("medium").toString();
 
@@ -422,11 +430,12 @@ public class verItemSerieActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        //datosSerie.setText(descripcion);
-                        datosSerie.setText(output);
+                        tv_horario.setText(horario);
+                        tv_duracion.setText(duracion);
+                        tv_puntaje.setText(puntaje);
+                        datosSerie.setText(Html.fromHtml(descripcion));
                         nombre.setText(nombre_string);
                         progress.dismiss();
-                        //url_imagen_serie=url_imagen;
                         cargar_imagen(url_imagen);
                     }
                 });

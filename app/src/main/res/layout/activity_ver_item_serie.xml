@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_ver_item_serie"
     android:layout_width="match_parent"
@@ -11,46 +11,15 @@
     tools:context="com.example.mel.proyiaw_series_mely.verItemSerieActivity">
 
 
-    <TextView
-        android:text="Titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/titulo"
-        android:textSize="20dp"/>
-
-
-    <Button
-        android:text="Ver capítulos"
-        android:layout_height="wrap_content"
-        android:layout_width="152dp"
-        android:layout_alignTop="@+id/agregarFav"
-        android:id="@+id/verCap"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/titulo"
-        android:layout_toEndOf="@+id/titulo" />
-
-    <Button
-        android:text="Agregar a favoritos"
-        android:layout_width="152dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:id="@+id/agregarFav"
-        android:layout_below="@+id/titulo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/titulo"
-        android:layout_toStartOf="@+id/titulo" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/verCap"
-        android:layout_marginTop="13dp"
-        android:layout_alignRight="@+id/verCap"
-        android:layout_alignEnd="@+id/verCap">
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/texto_ingresado"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:id="@+id/scroll">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,36 +27,149 @@
             android:orientation="vertical"
             android:weightSum="1">
 
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="21sp"
+                android:layout_gravity="center"
+                android:id="@+id/titulo"
+                android:textColor="#4E34B9"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_weight="0.00"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/agregarFav"
+                    android:layout_width="152dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:text="Agregar a Favoritos"
+                    />
+
+                <Button
+                    android:id="@+id/verCap"
+                    android:layout_width="152dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:text="Ver Capítulos" />
+
+
+            </LinearLayout>
+
+
+
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/tituloContenido"
+                android:textSize="16sp"
+                android:textColor="#4E34B9"
+                android:layout_gravity="center"
+                android:layout_alignBottom="@+id/image"
+                android:text="Resúmen"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/contenido"
-                android:layout_centerInParent="true"/>
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:layout_alignBottom="@+id/tituloContenido"/>
+
 
             <TextView
+                android:id="@+id/tituloHorario"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/titulo_link"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:textColor="#4E34B9"
+                android:layout_alignBottom="@+id/contenido"
+                android:layout_gravity="center"
+                android:text="Horario"
+                />
+
+            <TextView
                 android:text=""
-                android:layout_centerInParent="true"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_centerInParent="true"
+                android:layout_alignBottom="@+id/tituloHorario"
+                android:id="@+id/horario" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/tituloDuracion"
+                android:textSize="16sp"
+                android:textColor="#4E34B9"
+                android:text="Duracion:"
+                android:layout_marginTop="5dp"
+                android:layout_centerInParent="true"
+                android:layout_alignBottom="@+id/horario"/>
+
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_centerInParent="true"
+                android:layout_alignBottom="@+id/tituloDuracion"
+                android:id="@+id/duracion" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tituloPuntaje"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:textColor="#4E34B9"
+                android:text="Puntaje:"
+                android:layout_alignBottom="@+id/duracion"/>
+
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_centerInParent="true"
+                android:layout_alignBottom="@+id/tituloPuntaje"
+                android:id="@+id/puntaje" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:id="@+id/titulo_link"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text=""
                 android:autoLink="web"
-                android:id="@+id/link"
-                android:layout_centerInParent="true"/>
-
-
+                android:id="@+id/link"/>
 
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+
+
+</RelativeLayout>
