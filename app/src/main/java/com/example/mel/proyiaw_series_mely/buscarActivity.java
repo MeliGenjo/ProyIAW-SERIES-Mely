@@ -123,7 +123,7 @@ public class buscarActivity extends AppCompatActivity {
 
         for(int i=0; i<100;i++) {
             url = "http://api.tvmaze.com/shows?page="+i;
-            Log.i("ARREGLO NOMBRES", "Página: "+i);
+
             inicializarListaNombres(url);
         }
 
@@ -154,16 +154,12 @@ public class buscarActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e("JSON Error","onErrorResponse de inicializarLista" );
             }
         });
-       /* AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
-        Log.e("URL",jsonArrayRequest.getUrl() );
-
-        //fALTA el notify y decirle al adapter que cambio
-        adapter.notifyDataSetChanged();*/
-
+        AppController.getmInstance().addToRequesQueue(jsonArrayRequest);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
