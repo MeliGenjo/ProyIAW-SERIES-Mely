@@ -86,8 +86,6 @@ public class buscarActivity extends AppCompatActivity {
 
         //Serie a buscar ingresada por el usuario
         serie_usuario="";
-        //serie_ingresada= (EditText) findViewById(R.id.texto_ingresado);
-
 
         //Boton para buscar la serie
         buscar = (Button) findViewById(R.id.boton_buscar);
@@ -115,7 +113,7 @@ public class buscarActivity extends AppCompatActivity {
                 Profile profile = Profile.getCurrentProfile();
                 if (profile != null) {
                     agregar_a_favoritos(profile.getId(), idSerie);
-                    Log.e("favorito",profile.getId()+" "+ idSerie);
+                   // Log.e("favorito",profile.getId()+" "+ idSerie);
                 }
             }
         });
@@ -145,7 +143,7 @@ public class buscarActivity extends AppCompatActivity {
     }
 
     private void inicializarListaNombres(String url){
-        Log.i("ARREGLO NOMBRES", "Inicializo lista");
+
 
         jsonArrayRequest=new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
@@ -155,8 +153,6 @@ public class buscarActivity extends AppCompatActivity {
                     try{
                         JSONObject obj=response.getJSONObject(i);
                         arreglo_nombres.add(obj.getString("name"));
-                        Log.i("AGREGANDO", "Estoy agregando "+obj.getString("name")+" a la lista de nombres");
-
 
                     }catch(JSONException ex){
                         ex.printStackTrace();
@@ -219,14 +215,10 @@ public class buscarActivity extends AppCompatActivity {
         serie_usuario=autocompletar.getText().toString();
 
         if (!serie_usuario.equals("")) {
-          //sitio= "http://api.tvmaze.com/search/shows?q="+serie_usuario+"&page=1";
+
             sitio= "http://api.tvmaze.com/search/shows?q="+serie_usuario;
-            // sitio= "http://api.tvmaze.com/singlesearch/shows?q=" + serie_usuario;
-            //Cargo el contenido de la serie
-            //contenido_serie.setText(sitio);
+
             sendGetRequest(sitio,contenido_serie,nombre_serie);
-           /* agregar_favoritos.setVisibility(View.VISIBLE);
-            verCapitulos.setVisibility(View.VISIBLE);*/
 
 
         }
@@ -318,22 +310,16 @@ public class buscarActivity extends AppCompatActivity {
                 System.out.println("Post parameters : " + urlParameters);
                 System.out.println("Response Code : " + responseCode);
 
-                /*if(responseCode != HttpURLConnection.HTTP_OK){
-                    String msj="NO ES 200 OK: "+url_imagen_serie;
-                    Toast.makeText(getApplicationContext(),msj, Toast.LENGTH_SHORT).show();
-                }*/
 
                 final StringBuilder output = new StringBuilder("");
                 BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-               // String jsonString="";
-
 
                 String line = "";
-               // StringBuilder responseOutput = new StringBuilder();
+
                 System.out.println("output===============" + br);
                 while((line = br.readLine()) != null ) {
-                    // responseOutput.append(line);
+
                     json+=line; //meti todo el json aca
                 }
                 br.close();
@@ -341,10 +327,7 @@ public class buscarActivity extends AppCompatActivity {
 
                 try {
                     JSONArray jsonArray = new JSONArray(json);
-                    //String name;
-                   /* TextView nombre = (TextView) findViewById(R.id.nombreSerie);
-                    nombre.setText("");*/
-                   //for (int i=0; i<jsonArray.length();i++){
+
 
 
                     //Me faltan obtener los dias y el género pero son arreglos y no me deja obtener
@@ -393,10 +376,7 @@ public class buscarActivity extends AppCompatActivity {
                     output.append("La serie ingresada no existe");
 
                 }
-                else{
-                    //Muestro el contenido y hago visibles los botones de agregar a favoritos y ver capitulos
-                   // agregar_favoritos.setVisibility(View.VISIBLE);
-                }
+                
 
                 //output.append(jsonString.toString());
                 buscarActivity.this.runOnUiThread(new Runnable() {
@@ -495,7 +475,7 @@ public class buscarActivity extends AppCompatActivity {
         @Override
         protected Bitmap doInBackground(String... params) {
             // TODO Auto-generated method stub
-            Log.i("doInBackground" , "Entra en doInBackground");
+           // Log.i("doInBackground" , "Entra en doInBackground");
             String url = params[0];
             Bitmap imagen = descargarImagen(url);
             return imagen;
