@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_ver_item_serie"
     android:layout_width="match_parent"
@@ -20,16 +20,29 @@
         android:id="@+id/titulo"
         android:textSize="20dp"/>
 
+
     <Button
         android:text="Ver capítulos"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="152dp"
         android:layout_alignTop="@+id/agregarFav"
         android:id="@+id/verCap"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/titulo"
         android:layout_toEndOf="@+id/titulo" />
+
+    <Button
+        android:text="Agregar a favoritos"
+        android:layout_width="152dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:id="@+id/agregarFav"
+        android:layout_below="@+id/titulo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/titulo"
+        android:layout_toStartOf="@+id/titulo" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -42,46 +55,39 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <ImageView
+                android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/image"/>
+                android:layout_centerInParent="true"
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/contenido" />
+                android:id="@+id/contenido"
+                android:layout_centerInParent="true"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/titulo_link"
-                android:text=""/>
+                android:text=""
+                android:layout_centerInParent="true"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:autoLink="web"
-                android:id="@+id/link" />
+                android:id="@+id/link"
+                android:layout_centerInParent="true"/>
 
 
 
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:text="Agregar a favoritos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:id="@+id/agregarFav"
-        android:layout_below="@+id/titulo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/titulo"
-        android:layout_toStartOf="@+id/titulo" />
-
-
-</RelativeLayout>
+</LinearLayout>
