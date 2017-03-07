@@ -189,7 +189,7 @@ public class AgendaActivity extends AppCompatActivity {
 
                         //JSONObject imagen = objeto.getJSONObject("image");
                        // item.setImage(imagen.getString("medium"));
-                        item.setImage("@drawable/icono_cap.jpg");
+                        item.setImage("@drawable/icono.jpg");
 
                         ArrayList<String> a = new ArrayList<String>();
                         item.setGenre(a);
