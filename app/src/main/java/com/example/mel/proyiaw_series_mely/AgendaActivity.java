@@ -87,18 +87,7 @@ public class AgendaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
-                //Object o = listView.getItemAtPosition(position);
-                // Realiza lo que deseas, al recibir clic en el elemento de tu listView determinado por su posicion.
                 Log.i("Click", "click en el elemento " + position + " de mi ListView");
-
-              /*  Item selItem = (Item) adapter.getItem(position);
-                Log.i("TITULO", "titulo del elemento " + selItem.getTitle() + " de mi ListView");
-                // Starting new intent
-                Intent intent = new Intent(getApplicationContext(), verItemSerieActivity.class);
-                intent.putExtra("titulo",selItem.getTitle());
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
-
 
             }
         });
@@ -108,9 +97,7 @@ public class AgendaActivity extends AppCompatActivity {
         List<String> id_series_favoritas= obtener_id_series_favoritas();
         obtener_estrenos(id_series_favoritas);
 
-        /*dialog=new ProgressDialog(this);
-        dialog.setMessage("Cargando estrenos...");
-        dialog.show();*/
+        
     }
 
     private List<String> obtener_id_series_favoritas() {
@@ -178,20 +165,15 @@ public class AgendaActivity extends AppCompatActivity {
     }
 
     private void ver_si_hay_estrenos(String url, final String id_serie, final String dia){
-        Log.i("VER SI HAY","ENTRE AL METODO");
-       // sendGetRequest("http://api.tvmaze.com/shows/1/episodesbydate?date=2013-07-01");
-        //url="http://api.tvmaze.com/shows/1/episodesbydate?date=2013-07-01";
 
-        JsonArrayRequest req = new JsonArrayRequest(url,
+       JsonArrayRequest req = new JsonArrayRequest(url,
         new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.i("JSONARRAY", response.toString());
 
                 try {
-                    // Parsing json array response
-                    // loop through each json object
-                    //respuesta = "";
+
                     if(response.length()==0)
                         nohaycap.setText("No hay estrenos para visualizar");
 
@@ -212,8 +194,6 @@ public class AgendaActivity extends AppCompatActivity {
                         item.setRate(0);
                         item.setYear(0);
 
-                        //respuesta += "Name: " + name + "\n\n";
-
 
                         //add to array
                         array.add(item);
@@ -224,9 +204,10 @@ public class AgendaActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                     Toast.makeText(getApplicationContext(),
-                            "Error: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
+                            "No hay estrenos para visualizar", Toast.LENGTH_SHORT).show();
+                    nohaycap.setText("No hay estrenos para visualizar");
                 }
 
                 //hidepDialog();
