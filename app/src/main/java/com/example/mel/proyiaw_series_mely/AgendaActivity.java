@@ -136,6 +136,8 @@ public class AgendaActivity extends AppCompatActivity {
             //Por cada serie veo si hay estrenos en el día actual y del día siguiente
             //Hoy
          ver_si_hay_estrenos("http://api.tvmaze.com/shows/"+id_series_favoritas.get(id)+"/episodesbydate?date="+year+"-"+mes_armado+"-"+dia_armado,id_series_favoritas.get(id),"hoy");
+            Log.i("URL","http://api.tvmaze.com/shows/"+id_series_favoritas.get(id)+"/episodesbydate?date="+year+"-"+mes_armado+"-"+dia_armado);
+
 
             if((month!=2 && monthDay+1>31) || (month==2 &&monthDay+1>28)){
                 dia_armado="01";
@@ -157,7 +159,7 @@ public class AgendaActivity extends AppCompatActivity {
             //Mañana
               ver_si_hay_estrenos("http://api.tvmaze.com/shows/"+id_series_favoritas.get(id)+"/episodesbydate?date="+year+"-"+mes_armado+"-"+dia_armado,id_series_favoritas.get(id),"mañana");
             // ver_si_hay_estrenos("http://api.tvmaze.com/shows/1/episodesbydate?date=2013-07-01",1+"","mañana");
-
+            Log.i("URL","url:"+"http://api.tvmaze.com/shows/"+id_series_favoritas.get(id)+"/episodesbydate?date="+year+"-"+mes_armado+"-"+dia_armado);
         }
 
 
@@ -185,8 +187,9 @@ public class AgendaActivity extends AppCompatActivity {
                         String name = objeto.getString("name");
                         item.setTitle("Capitulo:" + name+": "+dia);
 
-                        JSONObject imagen = objeto.getJSONObject("image");
-                        item.setImage(imagen.getString("medium"));
+                        //JSONObject imagen = objeto.getJSONObject("image");
+                       // item.setImage(imagen.getString("medium"));
+                        item.setImage("@drawable/icono_cap.jpg");
 
                         ArrayList<String> a = new ArrayList<String>();
                         item.setGenre(a);
