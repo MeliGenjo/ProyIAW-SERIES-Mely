@@ -25,7 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="CAPITULOS ESTRENO" />
+        android:text="Capítulos estreno"
+        android:textColor="#4E34B9"
+        android:textSize="21sp"/>
 
     <ListView
         android:id="@+id/list_item"
