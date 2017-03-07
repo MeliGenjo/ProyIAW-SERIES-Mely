@@ -68,6 +68,8 @@ public class buscarActivity extends AppCompatActivity {
     private ProgressDialog progress;
     private  ArrayAdapter adapter;
 
+    private String titulo;
+
 
     //Autocomplete
     private List<String> arreglo_nombres = new ArrayList<String>();
@@ -86,6 +88,7 @@ public class buscarActivity extends AppCompatActivity {
 
         //Serie a buscar ingresada por el usuario
         serie_usuario="";
+        titulo="";
 
         //Boton para buscar la serie
         buscar = (Button) findViewById(R.id.boton_buscar);
@@ -240,6 +243,8 @@ public class buscarActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("idserie",idSerie);
         intent.putExtra("esFavorito","false");
+        intent.putExtra("titulo",titulo);
+        intent.putExtra("vengoDe","verSeries");
         startActivity(intent);
     }
     /*********************************************************************************************
@@ -340,6 +345,7 @@ public class buscarActivity extends AppCompatActivity {
                         output.append("Id serie: " + id_serie + "\n\n");
                         idSerie=id_serie;
                         nombre_string = show.optString("name").toString();
+                        titulo=nombre_string;
 
                         JSONObject schedule = (JSONObject) show.get("schedule");
                         horario=schedule.optString("time").toString();
