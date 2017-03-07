@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId() ){
             case R.id.itemBuscar:
-                Toast.makeText(MainActivity.this, "Ir activity buscar", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, "Ir activity buscar", Toast.LENGTH_SHORT).show();
                 irPantallaBuscar();
                 return true;
 

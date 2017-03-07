@@ -239,7 +239,7 @@ public class buscarActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CapitulosActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("idserie",idSerie);
-        intent.putExtra("esFavorito",false);
+        intent.putExtra("esFavorito","false");
         startActivity(intent);
     }
     /*********************************************************************************************

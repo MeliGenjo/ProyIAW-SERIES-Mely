@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.android.volley.Response;
@@ -78,8 +79,10 @@ public class CapitulosActivity extends AppCompatActivity {
         esFavoritoChe= getIntent().getStringExtra("esFavorito");
         if (esFavoritoChe.equals("true"))
             favorito=true;
-        else
-            favorito=false;
+        else {
+            favorito = false;
+            Toast.makeText(this, "La serie debe ser favorita para guardar capítulos vistos. ", Toast.LENGTH_SHORT).show();
+        }
 
         Log.d(TAG,"favorito: "+favorito);
         if (favorito)//controlo que se venga de la pantalla de favoritos para permitir edicion de capitulos
