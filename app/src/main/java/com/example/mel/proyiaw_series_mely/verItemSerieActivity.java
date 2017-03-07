@@ -72,15 +72,8 @@ public class verItemSerieActivity extends AppCompatActivity {
         titulo = getIntent().getStringExtra("titulo");
 
 
-
-        es_favorita = getIntent().getStringExtra("esfavorita");
-
-        if (es_favorita==null) {
-            es_favorita = "false";
-            Toast.makeText(this, "cambie es favorita ", Toast.LENGTH_SHORT).show();
-        }
-
         vengoDe= getIntent().getStringExtra("vengoDe");
+        es_favorita = getIntent().getStringExtra("esfavorita");
 
         nombre_serie= (TextView) findViewById(R.id.titulo);
         nombre_serie.setText(titulo);

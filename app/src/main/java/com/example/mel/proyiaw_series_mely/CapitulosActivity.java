@@ -188,7 +188,7 @@ public class CapitulosActivity extends AppCompatActivity {
         Intent intent = new Intent(this, verItemSerieActivity.class);
 
         intent.putExtra("titulo",titulo);
-        intent.putExtra("esfavorita",favorito);
+        intent.putExtra("esfavorita",esFavoritoChe);
         intent.putExtra("vengoDe",vengoDe);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
