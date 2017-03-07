@@ -328,9 +328,9 @@ public class verItemSerieActivity extends AppCompatActivity {
         }
 
         protected void onPreExecute(){
-            progress= new ProgressDialog(this.context);
-            progress.setMessage("Buscando");
-            progress.show();
+            //progress= new ProgressDialog(this.context);
+            //progress.setMessage("Buscando");
+            //progress.show();
         }
 
         @Override
@@ -443,7 +443,7 @@ public class verItemSerieActivity extends AppCompatActivity {
                         tv_puntaje.setText(puntaje);
                         datosSerie.setText(Html.fromHtml(descripcion));
                         nombre.setText(nombre_string);
-                        progress.dismiss();
+                       // progress.dismiss();
                         cargar_imagen(url_imagen);
                     }
                 });

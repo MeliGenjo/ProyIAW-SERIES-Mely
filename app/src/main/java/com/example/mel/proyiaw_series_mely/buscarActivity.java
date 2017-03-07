@@ -292,9 +292,9 @@ public class buscarActivity extends AppCompatActivity {
         }
 
         protected void onPreExecute(){
-           // progress= new ProgressDialog(this.context);
-           // progress.setMessage("Buscando");
-           // progress.show();
+            progress= new ProgressDialog(this.context);
+           progress.setMessage("Buscando");
+            progress.show();
         }
 
         @Override
@@ -399,7 +399,7 @@ public class buscarActivity extends AppCompatActivity {
                         horario_serie.setText(horario);
                         duracion_serie.setText(duracion);
                         puntaje_serie.setText(puntaje);
-                        //progress.dismiss();
+                        progress.dismiss();
                         //url_imagen_serie=url_imagen;
                         cargar_imagen(url_imagen);
                         if(control_de_favoritas(id_serie)){
