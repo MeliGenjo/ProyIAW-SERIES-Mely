@@ -70,6 +70,7 @@ public class verItemSerieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ver_item_serie);
 
         titulo = getIntent().getStringExtra("titulo");
+
         es_favorita = getIntent().getStringExtra("esfavorita");
 
         vengoDe= getIntent().getStringExtra("vengoDe");

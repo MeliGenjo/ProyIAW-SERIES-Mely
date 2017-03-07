@@ -64,14 +64,24 @@ public class CapitulosActivity extends AppCompatActivity {
     private Boolean favorito;
     private String vengoDe;
 
+    private String esFavoritoChe;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capitulos);
         idSerie = getIntent().getStringExtra("idserie");
         titulo=getIntent().getStringExtra("titulo");
         vengoDe= getIntent().getStringExtra("vengoDe");
+
         favorito= getIntent().getBooleanExtra("esFavorito",false);
-Log.d(TAG,"favorito: "+favorito);
+
+        esFavoritoChe= getIntent().getStringExtra("esFavorito");
+        if (esFavoritoChe.equals("true"))
+            favorito=true;
+        else
+            favorito=false;
+
+        Log.d(TAG,"favorito: "+favorito);
         if (favorito)//controlo que se venga de la pantalla de favoritos para permitir edicion de capitulos
             elegirFavoritos=true;
         else
