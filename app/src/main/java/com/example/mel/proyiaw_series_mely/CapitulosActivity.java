@@ -4,6 +4,7 @@ package com.example.mel.proyiaw_series_mely;
 import android.app.ProgressDialog;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,13 +30,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.layout_width;
+import static android.R.color.holo_purple;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.graphics.Color.BLACK;
 import static android.graphics.Color.WHITE;
+import static com.example.mel.proyiaw_series_mely.R.id.center;
 
 
 /**
@@ -48,6 +52,7 @@ public class CapitulosActivity extends AppCompatActivity {
     public static final String TAG = "CAPITULOS";
     public String[][] episodio;
     public String idSerie, titulo;
+    public int cantidadCapVistos;
     public int ultimaTemp;
     public ArrayList<String> lista = new ArrayList<String>();
     public LinearLayout episodios;
@@ -63,20 +68,17 @@ public class CapitulosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capitulos);
         idSerie = getIntent().getStringExtra("idserie");
-
         titulo=getIntent().getStringExtra("titulo");
         vengoDe= getIntent().getStringExtra("vengoDe");
-
         favorito= getIntent().getStringExtra("esFavorito");
         elegirFavoritos= favorito.equals("true");
-        if (favorito.equals("true"))
+        if (favorito.equals("true"))//controlo que se venga de la pantalla de favoritos para permitir edicion de capitulos
             elegirFavoritos=true;
         else
             elegirFavoritos=false;
-
         episodios = (LinearLayout) findViewById(R.id.linearLayoutEpisodios);
         if (elegirFavoritos) {
-            obtenerCapitulosVistos(idSerie);
+            lista=obtenerCapitulosVistos(idSerie);
         }
         String url = "http://api.tvmaze.com/shows/" + idSerie + "/episodes";
         adapter = new Adapter(this, array);
@@ -90,16 +92,15 @@ public class CapitulosActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 ArrayList<String> capitulosVistos= obtenerCapitulosVistos(idSerie);
-                Log.d(TAG,"======================================obtengo capitulos===================================");
-                hideDialog();
+                cantidadCapVistos=capitulosVistos.size();
+                    hideDialog();
                 //parsing json
                 int cant=response.length();
                 int cantTemp =0;
                 try {
                     JSONObject cantT = response.getJSONObject(cant-1);
                     cantTemp = cantT.getInt("season");
-                    Log.d(TAG,"CANTIDAD TEMPORADAS EN RSPONSE " + cantTemp);
-                } catch (JSONException e) {
+                    } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 episodio= new String[cantTemp+1][cant+1];
@@ -125,8 +126,7 @@ public class CapitulosActivity extends AppCompatActivity {
                             visto="f";
                         }
                         episodio[temporada][episodioJ] = episodioJ+" "+nombre+"-"+codigo+visto;
-                        Log.d(TAG,"METODO JSON nrotem "+(temporada)+ " nroepso "+(episodioJ)+" episodio asociado  " + episodio[temporada][episodioJ]);
-                    if(ultimaTemp<temporada){
+                             if(ultimaTemp<temporada){
                             ultimaTemp = temporada;
                         }
 
@@ -134,8 +134,7 @@ public class CapitulosActivity extends AppCompatActivity {
                         ex.printStackTrace();
                     }
                 }
-                Log.d(TAG,"======================================fin obtengo capitulos===================================");
-                fillCountryTable(ultimaTemp,cant);
+                     fillCountryTable(ultimaTemp,cant);
                 adapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
@@ -203,13 +202,24 @@ public class CapitulosActivity extends AppCompatActivity {
     void fillCountryTable(int cantTemporadas,int cantCapitulos) {
         Button b1;
         CheckBox t1;
+        TextView tituloS=new TextView(this);
         TextView tv1;
         TextView porcentajeF;
         int cantTemp=cantTemporadas;
-        double porcentaje= (lista.size()*100)/cantCapitulos;
+        DecimalFormat decimales = new DecimalFormat("0.00");
+        double cv= cantidadCapVistos;
+        double cc= cantCapitulos;
+        double porcentaje =(cv*100)/cc;
+        Log.d(TAG, " cantidadCapvistos "+cantidadCapVistos+" cantCapitulos "+cantCapitulos+" porcentaje  "+ decimales.format(porcentaje));
         porcentajeF =new TextView(this);
-        porcentajeF.setText(" Porcentaje visto de la serie:"+porcentaje+"%");
-
+        porcentajeF.setTextSize(15);
+        porcentajeF.setText(" Porcentaje visto de la serie:"+decimales.format(porcentaje)+"%");
+        tituloS.setText(titulo);
+        tituloS.setTextSize(30);
+        tituloS.setGravity(center);
+        tituloS.setTextColor(Color.parseColor("#684CDA"));
+        episodios.addView(tituloS, new TableLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         //Converting to dip unit
         int dip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 (float) 1, getResources().getDisplayMetrics());
@@ -217,33 +227,29 @@ public class CapitulosActivity extends AppCompatActivity {
         episodios.addView(porcentajeF, new TableLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         //agrego los capitulos y temporadas y los eventos asociados a los mismos
-        Log.d(TAG,"==========================================creo botones temporadas=====================================");
-        Log.d(TAG,"cantidad de temporadas: " + cantTemp);
 
         for (int nroTemp = 1; nroTemp <  cantTemp+1; nroTemp++) {
             b1 = new Button(this);
             b1.setId((nroTemp+0));
             b1.setText("Temporada " + (nroTemp));
             b1.setTextSize(15);
-            b1.setGravity(Gravity.LEFT);
+            b1.setGravity(Gravity.CENTER);
+
+            b1.setWidth(layout_width);
             b1.setTypeface(null, 1);
-            b1.setTextColor(BLACK);
+            b1.setTextColor(Color.parseColor("#684CDA"));
             b1.setCompoundDrawablesWithIntrinsicBounds(
                     0,     //left
                     0,      //tops
                     R.drawable.list_row_bg,  //right
                     0);
+            b1.setPadding(0,2,0,0);
             episodios.addView(b1, new TableLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
-            Log.d(TAG,"==========================================armo capitulos de temporada "+nroTemp+"=====================================");
-            Log.d(TAG,"CANTIDAD CAPITULOS ASIGNADOS "+ episodio[nroTemp].length);
-
             for (int nroEp = 1; nroEp < episodio[nroTemp].length; nroEp++) {
-                Log.d(TAG, " METODO CON ARREGLO nrotem " + (nroTemp) + " nroepso " + (nroEp) + " episodio asociado  " + episodio[nroTemp][nroEp]);
-                if (episodio[nroTemp][nroEp] == null) {
-                    Log.d(TAG, "corto x vacio" + (nroTemp) + "  " + (nroEp));
-                    break;
+                 if (episodio[nroTemp][nroEp] == null) {
+                          break;
                 }
 
 
@@ -257,7 +263,7 @@ public class CapitulosActivity extends AppCompatActivity {
                         visto = true;
                     }
 
-                    Log.d(TAG, "episodio asociado  " + fuevisto + " id asociado " + t1.getId());
+
                     t1.setTypeface(null, 1);
                     t1.setTextSize(15);
                     t1.setGravity(Gravity.LEFT);
@@ -306,23 +312,20 @@ public class CapitulosActivity extends AppCompatActivity {
                     LinearLayout parent = (LinearLayout) v.getParent();
                     Log.d(TAG, "cantidad dependencias buton  " + parent.getChildCount());
                     /**
-                     * It text color is black
+                     * It text color is VIOLETA
                      *         open the accordion of selected tab
                      *         close the accordion of remaining tab
                      * else
                      *         if text color is white
                      *         close the accordion of selected tab
                      */
-                    if (button.getCurrentTextColor() == BLACK) { //se abre acordeon
+                    if (button.getCurrentTextColor() == Color.parseColor("#684CDA")) { //se abre acordeon
                         for (int j = 0; j < parent.getChildCount(); j++) {
-                            Log.d(TAG, "id parent  " + parent.getChildAt(j).getId() + "  posicion maenu " + j);
-                            if (v.getId() == parent.getChildAt(j).getId())//si la temporada coincide con el id temporada del episodio lo muestro
+                              if (v.getId() == parent.getChildAt(j).getId())//si la temporada coincide con el id temporada del episodio lo muestro
                             {
-
                                 button.setTextColor(WHITE);
 // Change visibility
-                                Log.d(TAG, "objeto asociado que se muestra a boton: " + v.getId() + "  " + parent.getChildAt(j).getId());
-                                parent.getChildAt(j).setVisibility(parent.getChildAt(j).VISIBLE);
+                                       parent.getChildAt(j).setVisibility(parent.getChildAt(j).VISIBLE);
 
 // Chnage icon
                                 button.setCompoundDrawablesWithIntrinsicBounds(
@@ -333,11 +336,9 @@ public class CapitulosActivity extends AppCompatActivity {
                             }
                         }
                     } else { //cierro elemento
-                        Log.d(TAG, "cierro elemento");
-                        Log.d(TAG, "cantidad elementos a cerrar " + parent.getChildCount());
-                        for (int j = 0; j < parent.getChildCount(); j++) {
+                         for (int j = 0; j < parent.getChildCount(); j++) {
                             if (v.getId() == parent.getChildAt(j).getId() && parent.getChildAt(j).getVisibility() == View.VISIBLE) {
-                                button.setTextColor(BLACK);
+                                button.setTextColor(Color.parseColor("#684CDA"));
                                 if (button != parent.getChildAt(j)) {
                                     parent.getChildAt(j).setVisibility(parent.getChildAt(j).GONE);
                                 }
@@ -388,7 +389,7 @@ public class CapitulosActivity extends AppCompatActivity {
 
     private ArrayList<String> obtenerCapitulosVistos(String idSerie) {
         AdminSQLiteOpenHelper BD = new AdminSQLiteOpenHelper(getApplicationContext(), null, null, 1);
-        return BD.obtenerCapitulosVistos(idSerie); //ya existe el metodo
+        return BD.obtenerCapitulosVistos(idSerie);
     }
 
     //===========================================================controla si existe en la lista el capitulo============================

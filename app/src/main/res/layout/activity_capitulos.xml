@@ -4,11 +4,6 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical" android:layout_width="fill_parent"
 android:layout_height="fill_parent">
-    <TextView android:gravity="center_vertical|center_horizontal" android:textSize="26dip"
-              android:layout_width="fill_parent" android:layout_height="wrap_content"
-              android:textStyle="bold" android:layout_marginBottom="5dip" android:typeface="sans" android:text="Series"/>
-
-
 
     <LinearLayout
     android:layout_height="wrap_content"
