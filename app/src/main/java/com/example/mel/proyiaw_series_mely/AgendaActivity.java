@@ -97,7 +97,7 @@ public class AgendaActivity extends AppCompatActivity {
         List<String> id_series_favoritas= obtener_id_series_favoritas();
         obtener_estrenos(id_series_favoritas);
 
-        
+
     }
 
     private List<String> obtener_id_series_favoritas() {

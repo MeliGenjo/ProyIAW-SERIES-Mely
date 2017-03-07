@@ -78,7 +78,9 @@
                     android:layout_width="152dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat"
-                    android:text="Ver Capítulos" />
+                    android:text="Ver Capítulos"
+                    android:textColor="#4E34B9"
+                    />
 
                 <Button
                     android:id="@+id/agregarAFavoritos"
@@ -86,6 +88,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:text="Agregar a Favoritos"
+                    android:textColor="#4E34B9"
                     />
 
             </LinearLayout>

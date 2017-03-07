@@ -18,6 +18,7 @@
         android:layout_weight="0.09"
         android:text="Ver primero Genero"
         android:textSize="16sp"
+        android:textColor="#4E34B9"
         android:textAlignment="center" />
 
     <LinearLayout
@@ -32,6 +33,7 @@
             android:layout_width="71dp"
             android:layout_height="wrap_content"
             android:text="Action"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
@@ -39,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Drama"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
@@ -46,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Horror"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
@@ -53,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Romance"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="12sp" />
 
@@ -70,6 +75,7 @@
             android:layout_width="69dp"
             android:layout_height="wrap_content"
             android:text="Crime"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
@@ -77,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Thriller"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
@@ -84,6 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fantasy"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
         <Button
@@ -92,6 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="4.08"
             android:text="Adventure"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat"
             android:textSize="12sp" />
 
@@ -117,6 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnMostrarMas"
+            android:textColor="#4E34B9"
             android:textAppearance="@style/TextAppearance.AppCompat" />
 
     </LinearLayout>
