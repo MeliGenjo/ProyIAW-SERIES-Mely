@@ -72,11 +72,18 @@ public class CapitulosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_capitulos);
         idSerie = getIntent().getStringExtra("idserie");
         titulo=getIntent().getStringExtra("titulo");
+
+        if (titulo==null)
+            titulo="";
         vengoDe= getIntent().getStringExtra("vengoDe");
 
         favorito= getIntent().getBooleanExtra("esFavorito",false);
 
         esFavoritoChe= getIntent().getStringExtra("esFavorito");
+
+        if (esFavoritoChe==null) //viene desde las notificaciones
+            esFavoritoChe="true";
+
         if (esFavoritoChe.equals("true"))
             favorito=true;
         else {

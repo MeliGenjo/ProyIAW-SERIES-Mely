@@ -70,6 +70,11 @@ public class verItemSerieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ver_item_serie);
 
         titulo = getIntent().getStringExtra("titulo");
+        if (titulo.equals("")){
+            vengoDe="verSeries";
+            retrocederPantalla();
+        }
+
 
 
         vengoDe= getIntent().getStringExtra("vengoDe");
