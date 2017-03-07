@@ -61,7 +61,7 @@ public class CapitulosActivity extends AppCompatActivity {
     private Boolean elegirFavoritos;
     private List<Item> array = new ArrayList<Item>();
     private JsonArrayRequest jsonArrayRequest; private ListView listView;
-    private String favorito;
+    private Boolean favorito;
     private String vengoDe;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -70,9 +70,9 @@ public class CapitulosActivity extends AppCompatActivity {
         idSerie = getIntent().getStringExtra("idserie");
         titulo=getIntent().getStringExtra("titulo");
         vengoDe= getIntent().getStringExtra("vengoDe");
-        favorito= getIntent().getStringExtra("esFavorito");
-        elegirFavoritos= favorito.equals("true");
-        if (favorito.equals("true"))//controlo que se venga de la pantalla de favoritos para permitir edicion de capitulos
+        favorito= getIntent().getBooleanExtra("esFavorito",false);
+Log.d(TAG,"favorito: "+favorito);
+        if (favorito)//controlo que se venga de la pantalla de favoritos para permitir edicion de capitulos
             elegirFavoritos=true;
         else
             elegirFavoritos=false;
@@ -115,7 +115,6 @@ public class CapitulosActivity extends AppCompatActivity {
                         String visto;
                         if (capitulosVistos.size()!=0){ //si es vacio, no vi ninguno
                             boolean existe=existeCapitulo(capitulosVistos,String.valueOf(codigo));
-
                             if (existe){
                                 visto="v";
                                 capitulosVistos.remove(String.valueOf(codigo));
@@ -364,18 +363,17 @@ public class CapitulosActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "lista vacia");
         }
-        Log.d(TAG, "existe " + existe + " marcado " + marcado + "  codigo " + codigo);
+
         if (!existe && marcado) {
-            Log.d(TAG, "agrego capitulo");
+
             if (BD.agregarCapitulo(idSerie, codigo)) {
-                Log.d(TAG, "guardado");
-            } else {
+              } else {
                 Log.d(TAG, "fallo guardado");
             }
 
         } else {
             if (existe && !marcado) {
-                Log.d(TAG, "elimino capitulo");
+
                 if (BD.eliminarCapitulo(idSerie, codigo)) {
                     Log.d(TAG, "eliminado");
                 } else {
