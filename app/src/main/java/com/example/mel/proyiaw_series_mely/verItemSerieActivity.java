@@ -488,11 +488,11 @@ public class verItemSerieActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             super.onPreExecute();
 
-            pDialog = new ProgressDialog(verItemSerieActivity.this);
-            pDialog.setMessage("Cargando Imagen");
-            pDialog.setCancelable(true);
-            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pDialog.show();
+           // pDialog = new ProgressDialog(verItemSerieActivity.this);
+           // pDialog.setMessage("Cargando Imagen");
+           // pDialog.setCancelable(true);
+           // pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+           // pDialog.show();
 
         }
 
@@ -511,7 +511,7 @@ public class verItemSerieActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             imagen_serie.setImageBitmap(result);
-            pDialog.dismiss();
+            //pDialog.dismiss();
         }
 
         private Bitmap descargarImagen (String imageHttpAddress){
