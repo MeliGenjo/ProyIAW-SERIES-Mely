@@ -241,11 +241,11 @@ public class buscarActivity extends AppCompatActivity {
     private void irPantallaCapitulos(String idSerie) {
         Intent intent = new Intent(this, CapitulosActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
-        /*intent.putExtra("idserie",idSerie);
+        intent.putExtra("idserie",idSerie);
         intent.putExtra("esFavorito","false");
         intent.putExtra("titulo",titulo);
         intent.putExtra("vengoDe","verSeries");
-        startActivity(intent);*/
+        startActivity(intent);
     }
     /*********************************************************************************************
      *                   Clase para la obtención de datos de la serie
