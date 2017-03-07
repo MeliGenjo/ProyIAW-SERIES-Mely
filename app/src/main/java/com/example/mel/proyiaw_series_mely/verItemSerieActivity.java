@@ -91,7 +91,7 @@ public class verItemSerieActivity extends AppCompatActivity {
         //Agrego una serie a favoritos
         agregar_favoritos= (Button) findViewById(R.id.agregarFav);
         if (es_favorita.equals("true")){
-            agregar_favoritos.setText("Eliminar de Favoritas");
+            agregar_favoritos.setText("Eliminar de Fav.");
         }else{
             agregar_favoritos.setText("Agregar a Favoritas");
         }
@@ -102,11 +102,13 @@ public class verItemSerieActivity extends AppCompatActivity {
                 if (profile != null) {
                     if (es_favorita.equals("true")) {
                         eliminar_lista_favoritos(profile.getId(), idSerie);
+                        agregar_favoritos.setVisibility(View.GONE);
                         Log.e("favorito",profile.getId()+" "+ idSerie);
 
                     }else{
                         agregar_a_favoritos(profile.getId(), idSerie);
                         Log.e("favorito",profile.getId()+" "+ idSerie);
+                        agregar_favoritos.setVisibility(View.GONE);
                     }
 
                 }
