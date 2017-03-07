@@ -196,7 +196,7 @@ public class envioNotificaciones {
         mBuilder = new NotificationCompat.Builder(getApplicationContext());
         mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.icono)
+                .setSmallIcon(R.mipmap.notificacion)
                 .setContentTitle(titulo)
                 .setContentText(subtitulo)
                 .setVibrate(new long[] {100, 250, 100, 500})
